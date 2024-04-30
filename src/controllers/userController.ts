@@ -1,13 +1,10 @@
-const userController = {
-    test: (req, res) => {
-        return null;
+import { Controller } from "../types/Controller";
+import { Request, Response } from "express";
+
+const userController: Controller = {
+    HelloWorld: async (req: Request, res: Response) => {
+        return res.status(200).json({ message: "Hello, World!" });
     },
-    findbyid: async (req, res) => {
-        return null;
-    },
-    create: async (req, res) => {
-        return null;
-    }
-}
+};
 
 export default userController;
