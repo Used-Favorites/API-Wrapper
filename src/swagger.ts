@@ -1,5 +1,6 @@
-const swaggerAutogen = require("swagger-autogen")({ openapi: "3.0.0" });
+import { getRouteFilePaths } from "./utils/Completions";
 
+const swaggerAutogen = require("swagger-autogen")({ openapi: "3.0.0" });
 const PORT = process.env.PORT ?? 3000;
 
 const doc = {
@@ -50,8 +51,11 @@ const doc = {
 
 const outputFile = "./assets/swagger-output.json";
 
-const routesFiles = ["./src/server.ts"]
+
+
+const routesFiles = getRouteFilePaths();
 
 swaggerAutogen(outputFile, routesFiles, doc).then(() => {
   require("./server");
 });
+
