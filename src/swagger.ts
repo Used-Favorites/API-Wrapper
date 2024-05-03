@@ -7,7 +7,7 @@ const doc = {
   info: {
     version: "1.0.0",
     title: "API Documentation",
-    description: "Some description...",
+    description: "API Documentation for the Express API.",
   },
   servers: [
     {
