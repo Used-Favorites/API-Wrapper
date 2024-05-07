@@ -1,6 +1,5 @@
 import axios from "axios";
 import { Request, Response } from "express";
-import { randomProduct } from "../utils/randomData";
 
 const pythonController = {
   testAxios: async (req: Request, res: Response) => {
