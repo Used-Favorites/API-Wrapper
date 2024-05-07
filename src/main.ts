@@ -4,13 +4,13 @@ import {
   randomProduct,
   randomLocation,
 } from "./utils/randomData";
-import ProductsRouter from "./routes/Products";
+import PythonRouter from "./routes/Python";
 import userRouter from "./routes/User";
 import app from "./server";
 import TemplateRouter from "./routes/_Template";
 
 app.use("/user", userRouter);
-app.use("/products", ProductsRouter);
+app.use("/products", PythonRouter);
 
 app.use("/template", TemplateRouter);
 
