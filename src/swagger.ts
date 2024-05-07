@@ -22,10 +22,12 @@ const doc = {
     {
       name: "User",
       description: "User routes",
+      path: "/user",
     },
     {
       name: "Products",
       description: "Products routes",
+      path: "/products",
     },
   ],
 

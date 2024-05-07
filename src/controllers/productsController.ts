@@ -4,9 +4,13 @@ import { randomProduct } from "../utils/randomData";
 const productsController = {
   findProducts: async (req: Request, res: Response) => {
     if (req.query.search === randomProduct.name) {
-      res.json({
+      return res.json({
         message: "Product found",
         product: randomProduct,
+      });
+    } else {
+      return res.json({
+        message: "Product not found",
       });
     }
   },
