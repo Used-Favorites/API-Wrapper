@@ -8,6 +8,5 @@ const userController = {
     create: async (req, res) => {
         return null;
     }
-}
 
 export default userController;
