@@ -35,10 +35,23 @@ const pythonController = {
         request.on('end', function () {
 
             var POST = qs.parse(body);
-            //Para indexar o texto use POST['base64convertido']
+            //Para indexar o texto use POST['base64convertido'] e POST['nome']
             //TODO: Conectar com o Python
             //Enviar o base64
             //Redirect para pagina que vai esperar a resposta
+            axios
+              .post('http://127.0.0.1:5000/addImage', {
+                name: POST['nome'],
+                imagem: POST['base64convertido'] 
+              })
+              .then((response) => {
+                return res.json(response.data);
+              })
+              .catch((error) => {
+                return res.json(error);
+              });
+
+
 
 
         });
