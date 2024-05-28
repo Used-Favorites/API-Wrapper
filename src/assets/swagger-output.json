@@ -23,28 +23,6 @@
     }
   ],
   "paths": {
-    "/products/findProducts": {
-      "post": {
-        "tags": [
-          "Products"
-        ],
-        "description": "Endpoint to find an products.",
-        "parameters": [
-          {
-            "name": "search",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/products/testAxios": {
       "get": {
         "tags": [
