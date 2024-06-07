@@ -128,3 +128,11 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# prisma
+prisma/migrations/*
+prisma/dev.db
+prisma/dev.db-journal
+
+# swagger-output.json
+src/assets/*
