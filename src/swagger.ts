@@ -1,4 +1,4 @@
-import { getRouteFilePaths } from "./utils/Completions";
+import { getRouteFilePaths } from "./utils/completions";
 
 const swaggerAutogen = require("swagger-autogen")({ openapi: "3.0.0" });
 const PORT = process.env.PORT ?? 3000;
