@@ -21,14 +21,23 @@ model User {
 }
 model Products {
   id    Int     @id @default(autoincrement())
+  categoryId Int? @unique
+  datasheetsId Int? @unique
+
   name  String
   price Float
   description String
   image String
   cep String
-  categoryId Int? @unique
+
+  datasheet Datasheets? @relation(fields: [datasheetsId], references: [id])
   category Category? @relation(fields: [categoryId], references: [id])
   cart Cart[]
+}
+
+model Datasheets {
+  id Int @id @default(autoincrement())
+  products Products[]
 }
 
 model Category {
