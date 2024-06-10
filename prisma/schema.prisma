@@ -15,5 +15,31 @@ model User {
   email String  @unique
   password String
   
-  name  String?
+  firstName String
+
+  cart  Cart[]
+}
+model Products {
+  id    Int     @id @default(autoincrement())
+  name  String
+  price Float
+  description String
+  image String
+  cep String
+  categoryId Int? @unique
+  category Category? @relation(fields: [categoryId], references: [id])
+  cart Cart[]
+}
+
+model Category {
+  id    Int     @id @default(autoincrement())
+  name  String
+  products Products[]
+}
+
+model Cart {
+  id    Int     @id @default(autoincrement())
+  userId Int @unique
+  product Products[]
+  user User @relation(fields: [userId], references: [id])
 }
