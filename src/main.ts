@@ -4,6 +4,6 @@ import app from "./server";
 import TemplateRouter from "./routes/_Template";
 
 app.use("/user", userRouter);
-app.use("/products", PythonRouter);
+app.use("/python", PythonRouter);
 
 app.use("/template", TemplateRouter);
