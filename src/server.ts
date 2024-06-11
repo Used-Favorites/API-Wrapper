@@ -12,9 +12,6 @@ const PORT = process.env.PORT ?? 3000;
 
 //Json parser pro POST
 server.use(bodyParser.json());
-var jsonParser = bodyParser.json()
-var urlencodedParser = bodyParser.urlencoded({ extended: false })
-
 
 server.set('views', path.join(__dirname, '/views'));
 server.set('view engine', 'ejs');
