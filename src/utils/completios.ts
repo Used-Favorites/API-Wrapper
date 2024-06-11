@@ -1,8 +1,8 @@
-import * as fs from "fs";
-import * as path from "path";
+import fs from "fs";
+import path from "path";
 
 export function getRouteFilePaths(): string[] {
-  const routesFolderPath = path.join(__dirname, "../Routes");
+  const routesFolderPath = path.join(__dirname, "../routes");
   const filePaths = fs
     .readdirSync(routesFolderPath)
     .filter(
