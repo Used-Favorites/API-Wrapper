@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
- 
+  <title>Uploader de imagem para API</title>
 </head>
-<body class="container">
+<body class="container"></body>
 
 <header>
   
@@ -19,17 +19,16 @@
               id="img"
               type="file"
             /><br>
-            <label>Nome</label>
+            <label for="nome">Nome</label>
             <input type="text" id="nome" name="nome">
 
             <div class="container">
                 <div class="row">
                   <div class="col">
                     <h6>Image Preview:</h6>
-                    <img class="img" id="miniatura" />
+                    <img class="img" id="miniatura" alt="Preview" />
                   </div>
                   <div class="col">
-                   <!-- <h6>Base64 Output</h6>-->
                     <textarea id="base64convertido" name="base64convertido" rows="30" cols="50" hidden></textarea>
                   </div>
                 </div>
