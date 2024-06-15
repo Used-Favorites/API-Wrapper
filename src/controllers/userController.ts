@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
-
 const userController = {
   create: async (req: Request, res: Response) => {
     const { name, email, password } = req.body as {
@@ -11,7 +10,6 @@ const userController = {
     };
 
     console.log(req.body, req.params, req.query, req.headers);
-    
 
     if (!name || !email || !password) {
       return res.status(400).json({ error: "Missing name, email or password" });

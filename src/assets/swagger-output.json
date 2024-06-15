@@ -26,19 +26,9 @@
     "/products/testAxios": {
       "get": {
         "tags": [
-          "Products"
+          "Python"
         ],
-        "description": "Endpoint to test Axios.",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/uploadImg": {
-      "get": {
-        "description": "",
+        "description": "Endpoint to test axios in python.",
         "responses": {
           "default": {
             "description": ""
@@ -46,12 +36,40 @@
         }
       }
     },
-    "/uploadPy": {
-      "post": {
-        "description": "",
+    "/products/uploadImg": {
+      "get": {
+        "tags": [
+          "Python"
+        ],
+        "description": "Endpoint to upload image.",
         "responses": {
-          "200": {
-            "description": "OK"
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/products/uploadPy": {
+      "post": {
+        "tags": [
+          "Python"
+        ],
+        "description": "Endpoint to upload python file.",
+        "parameters": [
+          {
+            "name": "file",
+            "in": "body",
+            "description": "Python file",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
           }
         }
       }
@@ -61,7 +79,7 @@
         "tags": [
           "User"
         ],
-        "description": "Endpoint to create a new user.",
+        "description": "Endpoint\r  para criar um novo usuário.",
         "parameters": [
           {
             "name": "newUser",
@@ -93,31 +111,172 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "201": {
+            "description": "Usuário criado com sucesso."
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Erro ao criar usuário."
+          },
+          "500": {
+            "description": "Erro no servidor."
           }
-        },
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "example": "any"
+        }
+      }
+    },
+    "/user/list": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "description": "Endpoint\r  para listar todos os usuários.",
+        "responses": {
+          "200": {
+            "description": "Lista de usuários retornada com sucesso.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "example": "array"
+                    },
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "number",
+                          "example": 1
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "John Doe"
+                        },
+                        "email": {
+                          "type": "string",
+                          "example": "john.doe@example.com"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "name",
+                        "email"
+                      ]
+                    }
                   },
-                  "email": {
-                    "example": "any"
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "example": "array"
+                    },
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "number",
+                          "example": 1
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "John Doe"
+                        },
+                        "email": {
+                          "type": "string",
+                          "example": "john.doe@example.com"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "name",
+                        "email"
+                      ]
+                    }
                   },
-                  "password": {
-                    "example": "any"
+                  "xml": {
+                    "name": "main"
                   }
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/user/list/{id}": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "description": "Endpoint\r  para listar um usuário pelo id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/user/update/{id}": {
+      "put": {
+        "tags": [
+          "User"
+        ],
+        "description": "Endpoint\r  para atualizar um usuário pelo id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID do usuário"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/user/delete/{id}": {
+      "delete": {
+        "tags": [
+          "User"
+        ],
+        "description": "Endpoint\r  para deletar um usuário pelo id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID do usuário"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
           }
         }
       }
@@ -164,6 +323,9 @@
               }
             }
           }
+        },
+        "xml": {
+          "name": "User"
         }
       },
       "Product": {
@@ -205,6 +367,9 @@
               }
             }
           }
+        },
+        "xml": {
+          "name": "Product"
         }
       }
     }

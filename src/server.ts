@@ -1,7 +1,6 @@
 import swaggerUi from "swagger-ui-express";
 import swaggerFile from "./assets/swagger-output.json";
 
-const path = require("path");
 import cors from "cors";
 import express from "express";
 import bodyParser from "body-parser";
