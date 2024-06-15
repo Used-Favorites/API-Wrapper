@@ -4,9 +4,12 @@
 generator client {
   provider = "prisma-client-js"
 }
+generator dbml {
+  provider = "prisma-dbml-generator"
+}
 
 datasource db {
-  provider = "mysql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
@@ -16,8 +19,10 @@ model User {
   password String
   
   name String
+  andreessId Int? @unique
+  andreess Andreess? @relation(fields: [andreessId], references: [id])
 
-  cart  Cart[]
+  cart  Cart[] 
 }
 model Products {
   id    Int     @id @default(autoincrement())
@@ -28,11 +33,21 @@ model Products {
   price Float
   description String
   image String
-  cep String
 
+  
   datasheet Datasheets? @relation(fields: [datasheetsId], references: [id])
   category Category? @relation(fields: [categoryId], references: [id])
   cart Cart[]
+}
+
+model Andreess {
+  id Int @id @default(autoincrement())
+  street String
+  number String
+  city String
+  state String
+  cep String
+  user User[]
 }
 
 model Datasheets {

@@ -1,0 +1,67 @@
+//// ------------------------------------------------------
+//// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+//// ------------------------------------------------------
+
+Table User {
+  id Int [pk, increment]
+  email String [unique, not null]
+  password String [not null]
+  name String [not null]
+  andreessId Int [unique]
+  andreess Andreess
+  cart Cart [not null]
+}
+
+Table Products {
+  id Int [pk, increment]
+  categoryId Int [unique]
+  datasheetsId Int [unique]
+  name String [not null]
+  price Float [not null]
+  description String [not null]
+  image String [not null]
+  datasheet Datasheets
+  category Category
+  cart Cart [not null]
+}
+
+Table Andreess {
+  id Int [pk, increment]
+  street String [not null]
+  number String [not null]
+  city String [not null]
+  state String [not null]
+  cep String [not null]
+  user User [not null]
+}
+
+Table Datasheets {
+  id Int [pk, increment]
+  products Products [not null]
+}
+
+Table Category {
+  id Int [pk, increment]
+  name String [not null]
+  products Products [not null]
+}
+
+Table Cart {
+  id Int [pk, increment]
+  userId Int [unique, not null]
+  product Products [not null]
+  user User [not null]
+}
+
+Table CartToProducts {
+  cartId Int [ref: > Cart.id]
+  productId Int [ref: > Products.id]
+}
+
+Ref: User.andreessId > Andreess.id
+
+Ref: Products.datasheetsId > Datasheets.id
+
+Ref: Products.categoryId > Category.id
+
+Ref: Cart.userId > User.id
