@@ -9,11 +9,15 @@ const server = express();
 const PORT = process.env.PORT ?? 3000;
 
 server.use(cors());
-server.use("/doc", swaggerUi.serve, swaggerUi.setup(swaggerFile));
+server.use(["/doc", ""], swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ extended: false }));
 server.use(express.static("public"));
+
+server.use(express.static("views"));
+server.set("view engine", "ejs");
+server.set("views", "./views");
 
 server.listen(PORT, () => {
   console.log(
