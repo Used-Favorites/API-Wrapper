@@ -27,6 +27,7 @@ const userController = {
         name,
         email,
         password,
+        date_birth: new Date(),
       },
     });
 
