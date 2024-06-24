@@ -7,3 +7,7 @@ app.use(["/user", "/users"], userRouter);
 app.use("/python", PythonRouter);
 
 app.use("/template", TemplateRouter);
+
+app.use("/types", (req, res) => {
+  res.sendFile("types/interfaces.d.ts", { root: "./prisma" });
+});
