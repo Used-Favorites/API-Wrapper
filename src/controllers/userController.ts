@@ -9,8 +9,6 @@ const userController = {
       password: string;
     };
 
-    console.log(req.body, req.params, req.query, req.headers);
-
     if (!name || !email || !password) {
       return res.status(400).json({ error: "Missing name, email or password" });
     }

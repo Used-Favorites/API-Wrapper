@@ -9,7 +9,7 @@ const server = express();
 const PORT = process.env.PORT ?? 3000;
 
 server.use(cors());
-server.use(["/doc", ""], swaggerUi.serve, swaggerUi.setup(swaggerFile));
+server.use(["/doc", "/docs"], swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ extended: false }));
