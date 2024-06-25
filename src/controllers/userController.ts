@@ -91,6 +91,26 @@ const userController = {
 
     return res.json({ message: "User deleted" });
   },
+  login: async (req: Request, res: Response) => {
+    const { email, password } = req.body as { email: string; password: string };
+
+    const user = await prisma.user.findUnique({
+      where: {
+        email,
+      },
+    });
+
+    if (!user) return res.status(404).json({ error: "User not found" });
+
+    if (user.password !== password) {
+      return res.status(401).json({ error: "Invalid password" });
+    }
+
+    return res.json(user);
+  },
+  logout: async (req: Request, res: Response) => {
+    return res.json({ message: "Logout successful" });
+  },
 };
 
 export default userController;

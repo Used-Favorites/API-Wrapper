@@ -30,8 +30,8 @@
         ],
         "description": "Endpoint to test axios in python.",
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "OK"
           }
         }
       }
@@ -68,8 +68,8 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "OK"
           }
         }
       }
@@ -79,7 +79,7 @@
         "tags": [
           "User"
         ],
-        "description": "Endpoint\r  para criar um novo usuário.",
+        "description": "Endpoint  para criar um novo usuário.",
         "parameters": [
           {
             "name": "newUser",
@@ -111,6 +111,9 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "OK"
+          },
           "201": {
             "description": "Usuário criado com sucesso."
           },
@@ -120,6 +123,26 @@
           "500": {
             "description": "Erro no servidor."
           }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "example": "any"
+                  },
+                  "email": {
+                    "example": "any"
+                  },
+                  "password": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -128,7 +151,7 @@
         "tags": [
           "User"
         ],
-        "description": "Endpoint\r  para listar todos os usuários.",
+        "description": "Endpoint  para listar todos os usuários.",
         "responses": {
           "200": {
             "description": "Lista de usuários retornada com sucesso.",
@@ -215,7 +238,7 @@
         "tags": [
           "User"
         ],
-        "description": "Endpoint\r  para listar um usuário pelo id.",
+        "description": "Endpoint  para listar um usuário pelo id.",
         "parameters": [
           {
             "name": "id",
@@ -227,8 +250,11 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
           }
         }
       }
@@ -238,7 +264,7 @@
         "tags": [
           "User"
         ],
-        "description": "Endpoint\r  para atualizar um usuário pelo id.",
+        "description": "Endpoint  para atualizar um usuário pelo id.",
         "parameters": [
           {
             "name": "id",
@@ -251,8 +277,28 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "OK"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "example": "any"
+                  },
+                  "email": {
+                    "example": "any"
+                  },
+                  "password": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -262,7 +308,7 @@
         "tags": [
           "User"
         ],
-        "description": "Endpoint\r  para deletar um usuário pelo id.",
+        "description": "Endpoint  para deletar um usuário pelo id.",
         "parameters": [
           {
             "name": "id",
@@ -275,8 +321,8 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "OK"
           }
         }
       }

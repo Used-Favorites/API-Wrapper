@@ -98,4 +98,49 @@ userRouter.delete("/delete/:id", (req, res) => {
   userController.delete(req, res);
 });
 
+userRouter.post("/login", (req, res) => {
+  /* #swagger.tags = ['User']
+      #swagger.path = '/user/login'
+      #swagger.description = 'Endpoint
+      para realizar login.'
+      #swagger.parameters['login'] = {
+        in: 'body',
+        description: 'User information.',
+        required: true,
+        schema: {
+            $email: 'jon@gamil.com',
+            $password: '123456',
+          }
+      }
+      #swagger.responses[200] = {
+        description: 'Login realizado com sucesso.'
+      }
+      #swagger.responses[400] = {
+        description: 'Erro ao realizar login.'
+      }
+      #swagger.responses[500] = {
+        description: 'Erro no servidor.'
+      }
+      */
+  userController.login(req, res);
+});
+
+userRouter.get("/logout", (req, res) => {
+  /* #swagger.tags = ['User']
+      #swagger.path = '/user/logout'
+      #swagger.description = 'Endpoint
+      para realizar logout.'
+      #swagger.responses[200] = {
+        description: 'Logout realizado com sucesso.'
+      }
+      #swagger.responses[400] = {
+        description: 'Erro ao realizar logout.'
+      }
+      #swagger.responses[500] = {
+        description: 'Erro no servidor.'
+      }
+      */
+  userController.logout(req, res);
+});
+
 export default userRouter;
