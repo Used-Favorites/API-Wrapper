@@ -1,7 +1,7 @@
 import express from "express";
 var bodyParser = require('body-parser')
 var jsonParser = bodyParser.json()
-import pythonController from "../controllers/pythonController";
+import pythonController from "../controllers/python.controller";
 
 const PythonRouter = express.Router();
 

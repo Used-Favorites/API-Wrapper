@@ -1,6 +1,6 @@
 import express from "express";
 
-import userController from "../controllers/userController";
+import userController from "../controllers/user.controller";
 
 const userRouter = express.Router();
 
@@ -29,7 +29,7 @@ userRouter.post("/create", (req, res) => {
         description: 'Erro no servidor.'
       }
       */
-  userController.create(req, res);
+  userController.createUser(req, res);
 });
 
 userRouter.get("/list", (req, res) => {
@@ -54,7 +54,7 @@ userRouter.get("/list", (req, res) => {
 
 userRouter.get("/list/:id", (req, res) => {
   /* #swagger.tags = ['User']
-      #swagger.path = '/user/list/{id}'
+      #swagger.path = '/user/{id}'
       #swagger.description = 'Endpoint
       para listar um usuário pelo id.' */
   userController.listById(req, res);
@@ -62,7 +62,7 @@ userRouter.get("/list/:id", (req, res) => {
 
 userRouter.put("/update/:id", (req, res) => {
   /* #swagger.tags = ['User']
-      #swagger.path = '/user/update/{id}'
+      #swagger.path = '/user/{id}'
       #swagger.description = 'Endpoint
       para atualizar um usuário pelo id.'
       #swagger.parameters['id'] = {
@@ -86,7 +86,7 @@ userRouter.put("/update/:id", (req, res) => {
 
 userRouter.delete("/delete/:id", (req, res) => {
   /* #swagger.tags = ['User']
-      #swagger.path = '/user/delete/{id}'
+      #swagger.path = '/user/{id}'
       #swagger.description = 'Endpoint
       para deletar um usuário pelo id.' 
       #swagger.parameters['id'] = {

@@ -23,6 +23,147 @@
     }
   ],
   "paths": {
+    "/product/create": {
+      "get": {
+        "tags": [
+          "Product"
+        ],
+        "description": "Endpoint to create a new product.",
+        "parameters": [
+          {
+            "name": "newProduct",
+            "in": "body",
+            "description": "Product information.",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Product"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Product created successfully."
+          },
+          "400": {
+            "description": "Bad request."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/product/list": {
+      "get": {
+        "tags": [
+          "Product"
+        ],
+        "description": "Endpoint to list all products.",
+        "responses": {
+          "200": {
+            "description": "Products listed successfully."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/product/{id}": {
+      "get": {
+        "tags": [
+          "Product"
+        ],
+        "description": "Endpoint to get a product by id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Product id."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Product found."
+          },
+          "404": {
+            "description": "Product not found."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Product"
+        ],
+        "description": "Endpoint to update a product by id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Product id."
+          },
+          {
+            "name": "updateProduct",
+            "in": "body",
+            "description": "Product information.",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Product"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Product updated successfully."
+          },
+          "404": {
+            "description": "Product not found."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Product"
+        ],
+        "description": "Endpoint to delete a product by id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Product id."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Product deleted successfully."
+          },
+          "404": {
+            "description": "Product not found."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
     "/products/testAxios": {
       "get": {
         "tags": [
@@ -30,8 +171,8 @@
         ],
         "description": "Endpoint to test axios in python.",
         "responses": {
-          "200": {
-            "description": "OK"
+          "default": {
+            "description": ""
           }
         }
       }
@@ -68,8 +209,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "default": {
+            "description": ""
           }
         }
       }
@@ -79,7 +220,7 @@
         "tags": [
           "User"
         ],
-        "description": "Endpoint  para criar um novo usuário.",
+        "description": "Endpoint\r  para criar um novo usuário.",
         "parameters": [
           {
             "name": "newUser",
@@ -111,9 +252,6 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
-          },
           "201": {
             "description": "Usuário criado com sucesso."
           },
@@ -123,26 +261,6 @@
           "500": {
             "description": "Erro no servidor."
           }
-        },
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "example": "any"
-                  },
-                  "email": {
-                    "example": "any"
-                  },
-                  "password": {
-                    "example": "any"
-                  }
-                }
-              }
-            }
-          }
         }
       }
     },
@@ -151,7 +269,7 @@
         "tags": [
           "User"
         ],
-        "description": "Endpoint  para listar todos os usuários.",
+        "description": "Endpoint\r  para listar todos os usuários.",
         "responses": {
           "200": {
             "description": "Lista de usuários retornada com sucesso.",
@@ -233,12 +351,12 @@
         }
       }
     },
-    "/user/list/{id}": {
+    "/user/{id}": {
       "get": {
         "tags": [
           "User"
         ],
-        "description": "Endpoint  para listar um usuário pelo id.",
+        "description": "Endpoint\r  para listar um usuário pelo id.",
         "parameters": [
           {
             "name": "id",
@@ -250,21 +368,16 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found"
+          "default": {
+            "description": ""
           }
         }
-      }
-    },
-    "/user/update/{id}": {
+      },
       "put": {
         "tags": [
           "User"
         ],
-        "description": "Endpoint  para atualizar um usuário pelo id.",
+        "description": "Endpoint\r  para atualizar um usuário pelo id.",
         "parameters": [
           {
             "name": "id",
@@ -277,38 +390,16 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
-          }
-        },
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "example": "any"
-                  },
-                  "email": {
-                    "example": "any"
-                  },
-                  "password": {
-                    "example": "any"
-                  }
-                }
-              }
-            }
+          "default": {
+            "description": ""
           }
         }
-      }
-    },
-    "/user/delete/{id}": {
+      },
       "delete": {
         "tags": [
           "User"
         ],
-        "description": "Endpoint  para deletar um usuário pelo id.",
+        "description": "Endpoint\r  para deletar um usuário pelo id.",
         "parameters": [
           {
             "name": "id",
@@ -321,8 +412,71 @@
           }
         ],
         "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/user/login": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "description": "Endpoint\r  para realizar login.",
+        "parameters": [
+          {
+            "name": "login",
+            "in": "body",
+            "description": "User information.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string",
+                  "example": "jon@gamil.com"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "123456"
+                }
+              },
+              "required": [
+                "email",
+                "password"
+              ]
+            }
+          }
+        ],
+        "responses": {
           "200": {
-            "description": "OK"
+            "description": "Login realizado com sucesso."
+          },
+          "400": {
+            "description": "Erro ao realizar login."
+          },
+          "500": {
+            "description": "Erro no servidor."
+          }
+        }
+      }
+    },
+    "/user/logout": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "description": "Endpoint\r  para realizar logout.",
+        "responses": {
+          "200": {
+            "description": "Logout realizado com sucesso."
+          },
+          "400": {
+            "description": "Erro ao realizar logout."
+          },
+          "500": {
+            "description": "Erro no servidor."
           }
         }
       }

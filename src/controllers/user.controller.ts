@@ -1,8 +1,10 @@
 import { Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
+import jwt from "jsonwebtoken";
+
 const prisma = new PrismaClient();
 const userController = {
-  create: async (req: Request, res: Response) => {
+  createUser: async (req: Request, res: Response) => {
     const { name, email, password } = req.body as {
       name: string;
       email: string;
@@ -10,6 +12,14 @@ const userController = {
     };
 
     if (!name || !email || !password) {
+      console.log(
+        "body:",
+        req.body,
+        "params:",
+        req.params,
+        "query:",
+        req.query
+      );
       return res.status(400).json({ error: "Missing name, email or password" });
     }
     if (password.length < 6) {
@@ -91,6 +101,7 @@ const userController = {
 
     return res.json({ message: "User deleted" });
   },
+
   login: async (req: Request, res: Response) => {
     const { email, password } = req.body as { email: string; password: string };
 
@@ -106,7 +117,17 @@ const userController = {
       return res.status(401).json({ error: "Invalid password" });
     }
 
-    return res.json(user);
+    const userWithoutPassword = { ...user, password: undefined };
+
+    // Assumindo que você tem uma chave secreta para assinar o JWT
+    const secretKey = process.env.JWT_SECRET_KEY ?? "your-secret-key";
+    const token = jwt.sign(
+      { userId: user.id, email: user.email },
+      secretKey,
+      { expiresIn: "1h" } // Token expira em 1 hora
+    );
+
+    return res.json({ user: userWithoutPassword, token });
   },
   logout: async (req: Request, res: Response) => {
     return res.json({ message: "Logout successful" });
