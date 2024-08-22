@@ -1,7 +1,7 @@
 import swaggerUi from "swagger-ui-express";
 import swaggerFile from "./assets/swagger-output.json";
-
-import cors from "cors";
+const bodyParser = require('body-parser')
+//import cors from "cors";
 import express from "express";
 
 const server = express();
@@ -9,10 +9,13 @@ const PORT = process.env.PORT ?? 3000;
 
 server.use(["/doc", "/docs"], swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
-server.use(cors());
-server.use(express.json());
-server.use(express.urlencoded({ extended: false }));
+//server.use(cors());
+//server.use(express.json());
+//server.use(express.urlencoded({ extended: false }));
 server.use(express.static("public"));
+
+server.use(bodyParser.json());
+server.use(bodyParser.urlencoded({ extended: true }));
 
 server.use(express.static("views"));
 server.set("view engine", "ejs");

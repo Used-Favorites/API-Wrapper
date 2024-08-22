@@ -60,27 +60,24 @@ userRouter.get("/list/:id", (req, res) => {
   userController.listById(req, res);
 });
 
+
 userRouter.put("/update/:id", (req, res) => {
-  /* #swagger.tags = ['User']
-      #swagger.path = '/user/{id}'
-      #swagger.description = 'Endpoint
-      para atualizar um usuário pelo id.'
-      #swagger.parameters['id'] = {
-        in: 'path',
-        description: 'ID do usuário',
-        required: true,
-        type: 'integer'
+  /* 
+  #swagger.tags = ['User']
+  #swagger.path = '/user/{id}'
+  #swagger.description = 'Endpoint para atualizar um usuário pelo id.'
+  
+  #swagger.parameters['id'] = {
+      in: 'path',
+      description: 'ID do usuário',
+      required: true,
+      schema: {
+          type: 'integer'
       }
-      #swagger.parameters['newUser'] = {
-        in: 'body',
-        description: 'User information.',
-        required: true,
-        schema: {
-            $name: 'John Doe',
-            $email: 'calculte@univer.com',
-            $password: '123456',
-          }
-      */
+  }
+*/  
+  
+
   userController.update(req, res);
 });
 

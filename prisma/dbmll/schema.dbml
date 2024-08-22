@@ -1,0 +1,137 @@
+//// ------------------------------------------------------
+//// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+//// ------------------------------------------------------
+
+Table User {
+  id Int [pk, increment]
+  email String [unique, not null]
+  password String [not null]
+  name String [not null]
+  andreessId Int [unique]
+  phone String
+  andreess Andreess
+  date_birth DateTime [not null]
+  AuditTrailId Int [unique]
+  AuditTrail AuditTrail
+  cart Cart [not null]
+  productsBought Products [not null]
+  productsSold Products [not null]
+}
+
+Table supplier {
+  id Int [pk, increment]
+  name String [not null]
+  email String [not null]
+  phone String [not null]
+  andreess Andreess [not null]
+}
+
+Table Products {
+  id Int [pk, increment]
+  categoryId Int
+  sellerId Int [not null]
+  buyerId Int [not null]
+  datasheetsId Int [unique]
+  name String [not null]
+  price Float [not null]
+  description String [not null]
+  image String [not null]
+  auditTrailId Int [unique, not null]
+  auditTrail AuditTrail [not null]
+  datasheet Datasheets
+  category Category
+  seller User
+  buyer User
+  cart Cart
+  size Float [not null]
+  salePrice Decimal [not null]
+  repairCost Decimal [not null]
+  finalPrice Decimal [not null]
+  repaired Boolean [not null]
+  lastModified DateTime [not null]
+  interestedParties Int [not null]
+  brand String [not null]
+  model String [not null]
+  condition String [not null]
+  supplierId Int [not null]
+  cartId Int
+}
+
+Table Andreess {
+  id Int [pk, increment]
+  street String [not null]
+  number String [not null]
+  city String [not null]
+  state String [not null]
+  cep String [not null]
+  supplier supplier
+  User User
+  supplierId Int
+}
+
+Table Datasheets {
+  id Int [pk, increment]
+  products Products [not null]
+  description String
+}
+
+Table Category {
+  id Int [pk, increment]
+  name String [not null]
+  products Products [not null]
+}
+
+Table Cart {
+  id Int [pk, increment]
+  userId Int [unique, not null]
+  product Products [not null]
+  user User [not null]
+}
+
+Table AuditTrail {
+  id Int [pk, increment]
+  Products Products
+  User User
+  created_at DateTime [default: `now()`, not null]
+  updated_at DateTime [default: `now()`, not null]
+}
+
+Table Yolo {
+  id Int [pk, increment]
+  x Int [not null]
+  y Int [not null]
+  height Float [not null]
+  width Float [not null]
+  classes String [not null]
+}
+
+Table YoloTraining {
+  id Int [pk, increment]
+  vectors String [not null]
+}
+
+Table YoloImages {
+  id Int [pk, increment]
+  imageId Int [not null]
+  textToImage String [not null]
+}
+
+Ref: User.andreessId - Andreess.id
+
+Ref: User.AuditTrailId - AuditTrail.id
+
+Ref: Products.auditTrailId - AuditTrail.id
+
+Ref: Products.datasheetsId > Datasheets.id
+
+Ref: Products.categoryId > Category.id
+
+Ref: Products.sellerId > User.id
+
+Ref: Products.buyerId > User.id
+
+Ref: Products.cartId > Cart.id
+
+Ref: Andreess.supplierId > supplier.id
+
+Ref: Cart.userId > User.id

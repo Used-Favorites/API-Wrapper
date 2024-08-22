@@ -1,0 +1,145 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated/prisma-client-js"
+}
+
+generator dbml {
+  provider = "prisma-dbml-generator"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = "mysql://root@localhost:3307/prisma"
+}
+
+generator prismaClassGenerator {
+  provider = "prisma-class-generator"
+}
+
+model User {
+  id       Int    @id @default(autoincrement())
+  email    String @unique
+  password String
+
+  name       String
+  andreessId Int?      @unique
+  phone      String?
+  andreess   Andreess? @relation(fields: [andreessId], references: [id])
+  date_birth DateTime
+
+  AuditTrailId Int?        @unique
+  AuditTrail   AuditTrail? @relation(fields: [AuditTrailId], references: [id])
+
+  cart           Cart[]
+  productsBought Products[] @relation("ProductBuyer")
+  productsSold   Products[] @relation("ProductSeller")
+}
+
+model supplier {
+  id       Int        @id @default(autoincrement())
+  name     String
+  email    String
+  phone    String
+  andreess Andreess[]
+}
+
+model Products {
+  id         Int  @id @default(autoincrement())
+  categoryId Int?
+  sellerId   Int
+  buyerId    Int
+
+  datasheetsId Int? @unique
+
+  name        String
+  price       Float
+  description String
+  image       String
+
+  auditTrailId Int         @unique
+  auditTrail   AuditTrail  @relation(fields: [auditTrailId], references: [id])
+  datasheet    Datasheets? @relation(fields: [datasheetsId], references: [id])
+  category     Category?   @relation(fields: [categoryId], references: [id])
+  seller       User?       @relation("ProductSeller", fields: [sellerId], references: [id])
+  buyer        User?       @relation("ProductBuyer", fields: [buyerId], references: [id])
+  cart         Cart?       @relation(fields: [cartId], references: [id])
+
+  size       Float
+  salePrice  Decimal
+  repairCost Decimal
+  finalPrice Decimal
+
+  repaired Boolean
+
+  lastModified      DateTime
+  interestedParties Int
+  brand             String
+  model             String
+  condition         String
+  supplierId        Int
+  cartId            Int?
+}
+
+model Andreess {
+  id         Int       @id @default(autoincrement())
+  street     String
+  number     String
+  city       String
+  state      String
+  cep        String
+  supplier   supplier? @relation(fields: [supplierId], references: [id])
+  User       User?
+  supplierId Int?
+}
+
+model Datasheets {
+  id          Int        @id @default(autoincrement())
+  products    Products[]
+  description String?
+}
+
+model Category {
+  id       Int        @id @default(autoincrement())
+  name     String
+  products Products[]
+}
+
+model Cart {
+  id      Int        @id @default(autoincrement())
+  userId  Int        @unique
+  product Products[]
+  user    User       @relation(fields: [userId], references: [id])
+}
+
+model AuditTrail {
+  id Int @id @default(autoincrement())
+
+  Products Products?
+  User     User?
+
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+}
+
+model Yolo {
+  id      Int    @id @default(autoincrement())
+  x       Int
+  y       Int
+  height  Float
+  width   Float
+  classes String
+}
+
+model YoloTraining {
+  id      Int    @id @default(autoincrement())
+  vectors String
+}
+
+model YoloImages {
+  id          Int    @id @default(autoincrement())
+  imageId     Int
+  textToImage String
+}

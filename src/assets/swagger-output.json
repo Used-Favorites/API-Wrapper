@@ -20,61 +20,91 @@
       "name": "Products",
       "description": "Products routes",
       "path": "/products"
+    },
+    {
+      "name": "Category",
+      "description": "Category routes",
+      "path": "/category"
     }
   ],
   "paths": {
-    "/product/create": {
+    "/cart/carts": {
       "get": {
         "tags": [
-          "Product"
+          "Cart"
         ],
-        "description": "Endpoint to create a new product.",
+        "description": "Endpoint para listar todos os carrinhos.",
+        "responses": {
+          "200": {
+            "description": "Lista de carrinhos retornada com sucesso.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "example": "array"
+                    },
+                    "items": {
+                      "$ref": "#/components/schemas/Cart"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "example": "array"
+                    },
+                    "items": {
+                      "$ref": "#/components/schemas/Cart"
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Cart"
+        ],
+        "description": "Endpoint para cadastrar um novo carrinho",
         "parameters": [
           {
-            "name": "newProduct",
+            "name": "body",
             "in": "body",
-            "description": "Product information.",
+            "description": "Cart information.",
             "required": true,
             "schema": {
-              "$ref": "#/components/schemas/Product"
+              "$ref": "#/components/schemas/Cart"
             }
           }
         ],
         "responses": {
-          "201": {
-            "description": "Product created successfully."
-          },
-          "400": {
-            "description": "Bad request."
-          },
-          "500": {
-            "description": "Internal server error."
+          "default": {
+            "description": ""
           }
         }
       }
     },
-    "/product/list": {
+    "/cart/carts/{id}": {
       "get": {
         "tags": [
-          "Product"
+          "Cart"
         ],
-        "description": "Endpoint to list all products.",
-        "responses": {
-          "200": {
-            "description": "Products listed successfully."
-          },
-          "500": {
-            "description": "Internal server error."
-          }
-        }
-      }
-    },
-    "/product/{id}": {
-      "get": {
-        "tags": [
-          "Product"
-        ],
-        "description": "Endpoint to get a product by id.",
+        "description": "Endpoint para listar um carrinho pelo id.",
         "parameters": [
           {
             "name": "id",
@@ -83,26 +113,20 @@
             "schema": {
               "type": "string"
             },
-            "description": "Product id."
+            "description": "ID do carrinho"
           }
         ],
         "responses": {
-          "200": {
-            "description": "Product found."
-          },
-          "404": {
-            "description": "Product not found."
-          },
-          "500": {
-            "description": "Internal server error."
+          "default": {
+            "description": ""
           }
         }
       },
       "put": {
         "tags": [
-          "Product"
+          "Cart"
         ],
-        "description": "Endpoint to update a product by id.",
+        "description": "Endpoint para atualizar um carrinho",
         "parameters": [
           {
             "name": "id",
@@ -111,35 +135,29 @@
             "schema": {
               "type": "string"
             },
-            "description": "Product id."
+            "description": "ID do carrinho"
           },
           {
-            "name": "updateProduct",
+            "name": "body",
             "in": "body",
-            "description": "Product information.",
+            "description": "Cart information.",
             "required": true,
             "schema": {
-              "$ref": "#/components/schemas/Product"
+              "$ref": "#/components/schemas/Cart"
             }
           }
         ],
         "responses": {
-          "200": {
-            "description": "Product updated successfully."
-          },
-          "404": {
-            "description": "Product not found."
-          },
-          "500": {
-            "description": "Internal server error."
+          "default": {
+            "description": ""
           }
         }
       },
       "delete": {
         "tags": [
-          "Product"
+          "Cart"
         ],
-        "description": "Endpoint to delete a product by id.",
+        "description": "Endpoint para deletar um carrinho pelo id.",
         "parameters": [
           {
             "name": "id",
@@ -148,18 +166,1538 @@
             "schema": {
               "type": "string"
             },
-            "description": "Product id."
+            "description": "ID do carrinho"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/category/categories": {
+      "get": {
+        "tags": [
+          "Category"
+        ],
+        "description": "Endpoint para listar todos os usuários.",
+        "responses": {
+          "200": {
+            "description": "Lista de categorias retornada com sucesso.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "example": "array"
+                    },
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "number",
+                          "example": 1
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "Eletronics"
+                        }
+                      }
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "example": "array"
+                    },
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "number",
+                          "example": 1
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "Eletronics"
+                        }
+                      }
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Category"
+        ],
+        "description": "Endpoint para cadastrar uma nova categoria",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Category information.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "object"
+                },
+                "properties": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "example": {
+                          "type": "string",
+                          "example": "Geladeira"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/category/categories/{id}": {
+      "get": {
+        "tags": [
+          "Category"
+        ],
+        "description": "Endpoint para listar uma categoria pelo id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID da categoria"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Category"
+        ],
+        "description": "Endpoint para atualizar uma categoria",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID da categoria"
+          },
+          {
+            "name": "newName",
+            "in": "body",
+            "description": "Category information.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "object"
+                },
+                "properties": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "example": {
+                          "type": "string",
+                          "example": "Eletronics"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Category"
+        ],
+        "description": "Endpoint para deletar uma categoria pelo id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID da categoria"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/datasheet/datasheets": {
+      "get": {
+        "tags": [
+          "Datasheet"
+        ],
+        "description": "Endpoint para listar todas as datasheets.",
+        "responses": {
+          "200": {
+            "description": "Lista de datasheets retornada com sucesso.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "example": "array"
+                    },
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "number",
+                          "example": 1
+                        },
+                        "description": {
+                          "type": "string",
+                          "example": "Datasheet description"
+                        }
+                      }
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "example": "array"
+                    },
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "number",
+                          "example": 1
+                        },
+                        "description": {
+                          "type": "string",
+                          "example": "Datasheet description"
+                        }
+                      }
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Datasheet"
+        ],
+        "description": "Endpoint para cadastrar uma nova datasheet",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Datasheet information.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "object"
+                },
+                "properties": {
+                  "type": "object",
+                  "properties": {
+                    "description": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "example": {
+                          "type": "string",
+                          "example": "Datasheet description"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/datasheet/datasheets/{id}": {
+      "get": {
+        "tags": [
+          "Datasheet"
+        ],
+        "description": "Endpoint para listar uma datasheet pelo id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID da datasheet"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Datasheet"
+        ],
+        "description": "Endpoint para atualizar uma datasheet",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID da datasheet"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Datasheet information.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "object"
+                },
+                "properties": {
+                  "type": "object",
+                  "properties": {
+                    "description": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "example": {
+                          "type": "string",
+                          "example": "Updated description"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Datasheet"
+        ],
+        "description": "Endpoint para deletar uma datasheet pelo id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID da datasheet"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/products": {
+      "get": {
+        "tags": [
+          "Products"
+        ],
+        "description": "Endpoint para listar todos os produtos.",
+        "responses": {
+          "200": {
+            "description": "Lista de produtos retornada com sucesso.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "example": "array"
+                    },
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "number",
+                          "example": 1
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "Produto 1"
+                        },
+                        "price": {
+                          "type": "number",
+                          "example": 100
+                        },
+                        "description": {
+                          "type": "string",
+                          "example": "Descrição do produto 1"
+                        },
+                        "image": {
+                          "type": "string",
+                          "example": "url_da_imagem"
+                        },
+                        "categoryId": {
+                          "type": "number",
+                          "example": 2
+                        },
+                        "sellerId": {
+                          "type": "number",
+                          "example": 3
+                        },
+                        "buyerId": {
+                          "type": "number",
+                          "example": 4
+                        },
+                        "datasheetsId": {
+                          "type": "number",
+                          "example": 5
+                        },
+                        "auditTrailId": {
+                          "type": "number",
+                          "example": 6
+                        },
+                        "size": {
+                          "type": "number",
+                          "example": 10.5
+                        },
+                        "salePrice": {
+                          "type": "number",
+                          "example": 90
+                        },
+                        "repairCost": {
+                          "type": "number",
+                          "example": 5
+                        },
+                        "finalPrice": {
+                          "type": "number",
+                          "example": 95
+                        },
+                        "repaired": {
+                          "type": "boolean",
+                          "example": true
+                        },
+                        "lastModified": {
+                          "type": "string",
+                          "example": "2024-08-22T00:00:00Z"
+                        },
+                        "interestedParties": {
+                          "type": "number",
+                          "example": 10
+                        },
+                        "brand": {
+                          "type": "string",
+                          "example": "Marca"
+                        },
+                        "model": {
+                          "type": "string",
+                          "example": "Modelo"
+                        },
+                        "condition": {
+                          "type": "string",
+                          "example": "Novo"
+                        },
+                        "supplierId": {
+                          "type": "number",
+                          "example": 7
+                        },
+                        "cartId": {
+                          "type": "number",
+                          "example": 8
+                        }
+                      }
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "example": "array"
+                    },
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "number",
+                          "example": 1
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "Produto 1"
+                        },
+                        "price": {
+                          "type": "number",
+                          "example": 100
+                        },
+                        "description": {
+                          "type": "string",
+                          "example": "Descrição do produto 1"
+                        },
+                        "image": {
+                          "type": "string",
+                          "example": "url_da_imagem"
+                        },
+                        "categoryId": {
+                          "type": "number",
+                          "example": 2
+                        },
+                        "sellerId": {
+                          "type": "number",
+                          "example": 3
+                        },
+                        "buyerId": {
+                          "type": "number",
+                          "example": 4
+                        },
+                        "datasheetsId": {
+                          "type": "number",
+                          "example": 5
+                        },
+                        "auditTrailId": {
+                          "type": "number",
+                          "example": 6
+                        },
+                        "size": {
+                          "type": "number",
+                          "example": 10.5
+                        },
+                        "salePrice": {
+                          "type": "number",
+                          "example": 90
+                        },
+                        "repairCost": {
+                          "type": "number",
+                          "example": 5
+                        },
+                        "finalPrice": {
+                          "type": "number",
+                          "example": 95
+                        },
+                        "repaired": {
+                          "type": "boolean",
+                          "example": true
+                        },
+                        "lastModified": {
+                          "type": "string",
+                          "example": "2024-08-22T00:00:00Z"
+                        },
+                        "interestedParties": {
+                          "type": "number",
+                          "example": 10
+                        },
+                        "brand": {
+                          "type": "string",
+                          "example": "Marca"
+                        },
+                        "model": {
+                          "type": "string",
+                          "example": "Modelo"
+                        },
+                        "condition": {
+                          "type": "string",
+                          "example": "Novo"
+                        },
+                        "supplierId": {
+                          "type": "number",
+                          "example": 7
+                        },
+                        "cartId": {
+                          "type": "number",
+                          "example": 8
+                        }
+                      }
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Products"
+        ],
+        "description": "Endpoint para cadastrar um novo produto.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Informações do produto.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "object"
+                },
+                "properties": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "example": {
+                          "type": "string",
+                          "example": "Produto 1"
+                        }
+                      }
+                    },
+                    "price": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "number"
+                        },
+                        "example": {
+                          "type": "number",
+                          "example": 100
+                        }
+                      }
+                    },
+                    "description": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "example": {
+                          "type": "string",
+                          "example": "Descrição do produto 1"
+                        }
+                      }
+                    },
+                    "image": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "example": {
+                          "type": "string",
+                          "example": "url_da_imagem"
+                        }
+                      }
+                    },
+                    "categoryId": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "integer"
+                        },
+                        "example": {
+                          "type": "number",
+                          "example": 2
+                        }
+                      }
+                    },
+                    "sellerId": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "integer"
+                        },
+                        "example": {
+                          "type": "number",
+                          "example": 3
+                        }
+                      }
+                    },
+                    "buyerId": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "integer"
+                        },
+                        "example": {
+                          "type": "number",
+                          "example": 4
+                        }
+                      }
+                    },
+                    "datasheetsId": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "integer"
+                        },
+                        "example": {
+                          "type": "number",
+                          "example": 5
+                        }
+                      }
+                    },
+                    "auditTrailId": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "integer"
+                        },
+                        "example": {
+                          "type": "number",
+                          "example": 6
+                        }
+                      }
+                    },
+                    "size": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "number"
+                        },
+                        "example": {
+                          "type": "number",
+                          "example": 10.5
+                        }
+                      }
+                    },
+                    "salePrice": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "number"
+                        },
+                        "example": {
+                          "type": "number",
+                          "example": 90
+                        }
+                      }
+                    },
+                    "repairCost": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "number"
+                        },
+                        "example": {
+                          "type": "number",
+                          "example": 5
+                        }
+                      }
+                    },
+                    "finalPrice": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "number"
+                        },
+                        "example": {
+                          "type": "number",
+                          "example": 95
+                        }
+                      }
+                    },
+                    "repaired": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "boolean"
+                        },
+                        "example": {
+                          "type": "boolean",
+                          "example": true
+                        }
+                      }
+                    },
+                    "lastModified": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "example": {
+                          "type": "string",
+                          "example": "2024-08-22T00:00:00Z"
+                        }
+                      }
+                    },
+                    "interestedParties": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "integer"
+                        },
+                        "example": {
+                          "type": "number",
+                          "example": 10
+                        }
+                      }
+                    },
+                    "brand": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "example": {
+                          "type": "string",
+                          "example": "Marca"
+                        }
+                      }
+                    },
+                    "model": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "example": {
+                          "type": "string",
+                          "example": "Modelo"
+                        }
+                      }
+                    },
+                    "condition": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "example": {
+                          "type": "string",
+                          "example": "Novo"
+                        }
+                      }
+                    },
+                    "supplierId": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "integer"
+                        },
+                        "example": {
+                          "type": "number",
+                          "example": 7
+                        }
+                      }
+                    },
+                    "cartId": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "integer"
+                        },
+                        "example": {
+                          "type": "number",
+                          "example": 8
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/products/{id}": {
+      "get": {
+        "tags": [
+          "Products"
+        ],
+        "description": "Endpoint para listar um produto pelo ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID do produto"
           }
         ],
         "responses": {
           "200": {
-            "description": "Product deleted successfully."
+            "description": "Produto retornado com sucesso.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "number",
+                      "example": 1
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "Produto 1"
+                    },
+                    "price": {
+                      "type": "number",
+                      "example": 100
+                    },
+                    "description": {
+                      "type": "string",
+                      "example": "Descrição do produto 1"
+                    },
+                    "image": {
+                      "type": "string",
+                      "example": "url_da_imagem"
+                    },
+                    "categoryId": {
+                      "type": "number",
+                      "example": 2
+                    },
+                    "sellerId": {
+                      "type": "number",
+                      "example": 3
+                    },
+                    "buyerId": {
+                      "type": "number",
+                      "example": 4
+                    },
+                    "datasheetsId": {
+                      "type": "number",
+                      "example": 5
+                    },
+                    "auditTrailId": {
+                      "type": "number",
+                      "example": 6
+                    },
+                    "size": {
+                      "type": "number",
+                      "example": 10.5
+                    },
+                    "salePrice": {
+                      "type": "number",
+                      "example": 90
+                    },
+                    "repairCost": {
+                      "type": "number",
+                      "example": 5
+                    },
+                    "finalPrice": {
+                      "type": "number",
+                      "example": 95
+                    },
+                    "repaired": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "lastModified": {
+                      "type": "string",
+                      "example": "2024-08-22T00:00:00Z"
+                    },
+                    "interestedParties": {
+                      "type": "number",
+                      "example": 10
+                    },
+                    "brand": {
+                      "type": "string",
+                      "example": "Marca"
+                    },
+                    "model": {
+                      "type": "string",
+                      "example": "Modelo"
+                    },
+                    "condition": {
+                      "type": "string",
+                      "example": "Novo"
+                    },
+                    "supplierId": {
+                      "type": "number",
+                      "example": 7
+                    },
+                    "cartId": {
+                      "type": "number",
+                      "example": 8
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "number",
+                      "example": 1
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "Produto 1"
+                    },
+                    "price": {
+                      "type": "number",
+                      "example": 100
+                    },
+                    "description": {
+                      "type": "string",
+                      "example": "Descrição do produto 1"
+                    },
+                    "image": {
+                      "type": "string",
+                      "example": "url_da_imagem"
+                    },
+                    "categoryId": {
+                      "type": "number",
+                      "example": 2
+                    },
+                    "sellerId": {
+                      "type": "number",
+                      "example": 3
+                    },
+                    "buyerId": {
+                      "type": "number",
+                      "example": 4
+                    },
+                    "datasheetsId": {
+                      "type": "number",
+                      "example": 5
+                    },
+                    "auditTrailId": {
+                      "type": "number",
+                      "example": 6
+                    },
+                    "size": {
+                      "type": "number",
+                      "example": 10.5
+                    },
+                    "salePrice": {
+                      "type": "number",
+                      "example": 90
+                    },
+                    "repairCost": {
+                      "type": "number",
+                      "example": 5
+                    },
+                    "finalPrice": {
+                      "type": "number",
+                      "example": 95
+                    },
+                    "repaired": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "lastModified": {
+                      "type": "string",
+                      "example": "2024-08-22T00:00:00Z"
+                    },
+                    "interestedParties": {
+                      "type": "number",
+                      "example": 10
+                    },
+                    "brand": {
+                      "type": "string",
+                      "example": "Marca"
+                    },
+                    "model": {
+                      "type": "string",
+                      "example": "Modelo"
+                    },
+                    "condition": {
+                      "type": "string",
+                      "example": "Novo"
+                    },
+                    "supplierId": {
+                      "type": "number",
+                      "example": 7
+                    },
+                    "cartId": {
+                      "type": "number",
+                      "example": 8
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Products"
+        ],
+        "description": "Endpoint para atualizar um produto existente.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID do produto"
           },
-          "404": {
-            "description": "Product not found."
-          },
-          "500": {
-            "description": "Internal server error."
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Informações atualizadas do produto.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "object"
+                },
+                "properties": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "example": {
+                          "type": "string",
+                          "example": "Produto 1"
+                        }
+                      }
+                    },
+                    "price": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "number"
+                        },
+                        "example": {
+                          "type": "number",
+                          "example": 110
+                        }
+                      }
+                    },
+                    "description": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "example": {
+                          "type": "string",
+                          "example": "Descrição atualizada do produto 1"
+                        }
+                      }
+                    },
+                    "image": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "example": {
+                          "type": "string",
+                          "example": "url_da_imagem_atualizada"
+                        }
+                      }
+                    },
+                    "categoryId": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "integer"
+                        },
+                        "example": {
+                          "type": "number",
+                          "example": 2
+                        }
+                      }
+                    },
+                    "sellerId": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "integer"
+                        },
+                        "example": {
+                          "type": "number",
+                          "example": 3
+                        }
+                      }
+                    },
+                    "buyerId": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "integer"
+                        },
+                        "example": {
+                          "type": "number",
+                          "example": 4
+                        }
+                      }
+                    },
+                    "datasheetsId": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "integer"
+                        },
+                        "example": {
+                          "type": "number",
+                          "example": 5
+                        }
+                      }
+                    },
+                    "auditTrailId": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "integer"
+                        },
+                        "example": {
+                          "type": "number",
+                          "example": 6
+                        }
+                      }
+                    },
+                    "size": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "number"
+                        },
+                        "example": {
+                          "type": "number",
+                          "example": 11
+                        }
+                      }
+                    },
+                    "salePrice": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "number"
+                        },
+                        "example": {
+                          "type": "number",
+                          "example": 95
+                        }
+                      }
+                    },
+                    "repairCost": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "number"
+                        },
+                        "example": {
+                          "type": "number",
+                          "example": 5
+                        }
+                      }
+                    },
+                    "finalPrice": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "number"
+                        },
+                        "example": {
+                          "type": "number",
+                          "example": 100
+                        }
+                      }
+                    },
+                    "repaired": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "boolean"
+                        },
+                        "example": {
+                          "type": "boolean",
+                          "example": true
+                        }
+                      }
+                    },
+                    "lastModified": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "example": {
+                          "type": "string",
+                          "example": "2024-08-23T00:00:00Z"
+                        }
+                      }
+                    },
+                    "interestedParties": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "integer"
+                        },
+                        "example": {
+                          "type": "number",
+                          "example": 12
+                        }
+                      }
+                    },
+                    "brand": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "example": {
+                          "type": "string",
+                          "example": "Nova Marca"
+                        }
+                      }
+                    },
+                    "model": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "example": {
+                          "type": "string",
+                          "example": "Novo Modelo"
+                        }
+                      }
+                    },
+                    "condition": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "string"
+                        },
+                        "example": {
+                          "type": "string",
+                          "example": "Usado"
+                        }
+                      }
+                    },
+                    "supplierId": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "integer"
+                        },
+                        "example": {
+                          "type": "number",
+                          "example": 7
+                        }
+                      }
+                    },
+                    "cartId": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "example": "integer"
+                        },
+                        "example": {
+                          "type": "number",
+                          "example": 8
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Products"
+        ],
+        "description": "Endpoint para deletar um produto pelo ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID do produto"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
           }
         }
       }
@@ -377,14 +1915,14 @@
         "tags": [
           "User"
         ],
-        "description": "Endpoint\r  para atualizar um usuário pelo id.",
+        "description": "Endpoint para atualizar um usuário pelo id.",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "integer"
             },
             "description": "ID do usuário"
           }
@@ -570,6 +2108,53 @@
         },
         "xml": {
           "name": "Product"
+        }
+      },
+      "Category": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "example": "object"
+          },
+          "properties": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "integer"
+                  },
+                  "format": {
+                    "type": "string",
+                    "example": "int32"
+                  },
+                  "example": {
+                    "type": "number",
+                    "example": 1
+                  }
+                }
+              },
+              "name": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "example": {
+                    "type": "string",
+                    "example": "Electronics"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "xml": {
+          "name": "Category"
         }
       }
     }

@@ -3,17 +3,23 @@
 
 generator client {
   provider = "prisma-client-js"
+ 
 }
 
 generator dbml {
   provider = "prisma-dbml-generator"
+  output= "./dbmll"
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
+  provider = "mysql"
+  url      = "mysql://root@localhost:3307/prisma"
 }
 
+generator class {
+    provider = "prisma-class-generator"
+    output= "./gen"
+}
 model User {
   id       Int    @id @default(autoincrement())
   email    String @unique

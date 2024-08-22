@@ -29,6 +29,11 @@ const doc = {
       description: "Products routes",
       path: "/products",
     },
+    {
+      name: "Category",
+      description: "Category routes",
+      path: "/category",
+    },
   ],
 
   definitions: {
@@ -48,6 +53,21 @@ const doc = {
         price: { type: "number" },
       },
     },
+    Category: {
+      type: 'object',
+      properties: {
+        id: {
+          type: 'integer',
+          format: 'int32',
+          example: 1,
+        },
+        name: {
+          type: 'string',
+          example: 'Electronics',
+        },
+      },
+    },
+
   },
 };
 
