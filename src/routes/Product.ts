@@ -6,7 +6,7 @@ const ProductRouter = express.Router();
 // Listar todos os produtos
 ProductRouter.get('/products', (req: Request, res: Response) => {
   /* #swagger.tags = ['Products']
-     #swagger.path = '/products'
+     #swagger.path = '/Product/products'
      #swagger.description = 'Endpoint para listar todos os produtos.'
      #swagger.responses[200] = {
        description: 'Lista de produtos retornada com sucesso.',
@@ -45,7 +45,7 @@ ProductRouter.get('/products', (req: Request, res: Response) => {
 // Listar um produto por ID
 ProductRouter.get('/products/:id', (req: Request, res: Response) => {
   /* #swagger.tags = ['Products']
-     #swagger.path = '/products/{id}'
+     #swagger.path = '/Product/products/{id}'
      #swagger.description = 'Endpoint para listar um produto pelo ID.'
      #swagger.parameters['id'] = {
        in: 'path',
@@ -87,7 +87,7 @@ ProductRouter.get('/products/:id', (req: Request, res: Response) => {
 // Criar um novo produto
 ProductRouter.post('/products', (req: Request, res: Response) => {
   /* #swagger.tags = ['Products']
-     #swagger.path = '/products'
+     #swagger.path = '/Product/products'
      #swagger.produces = ['application/json']
      #swagger.consumes = ['application/json']
      #swagger.description = 'Endpoint para cadastrar um novo produto.'
@@ -129,7 +129,7 @@ ProductRouter.post('/products', (req: Request, res: Response) => {
 // Atualizar um produto existente
 ProductRouter.put('/products/:id', (req: Request, res: Response) => {
   /* #swagger.tags = ['Products']
-     #swagger.path = '/products/{id}'
+     #swagger.path = '/Product/products/{id}'
      #swagger.description = 'Endpoint para atualizar um produto existente.'
      #swagger.parameters['id'] = {
        in: 'path',
@@ -175,7 +175,7 @@ ProductRouter.put('/products/:id', (req: Request, res: Response) => {
 // Excluir um produto
 ProductRouter.delete('/products/:id', (req: Request, res: Response) => {
   /* #swagger.tags = ['Products']
-     #swagger.path = '/products/{id}'
+     #swagger.path = '/Product/products/{id}'
      #swagger.description = 'Endpoint para deletar um produto pelo ID.'
      #swagger.parameters['id'] = {
        in: 'path',

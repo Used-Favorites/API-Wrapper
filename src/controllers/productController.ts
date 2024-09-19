@@ -53,7 +53,10 @@ export const createProduct = async (req: Request, res: Response): Promise<void> 
         datasheetsId,
         name,
         price,
+        promoPrice,
         description,
+        problemDescription,
+        quality,
         image,
         auditTrailId,
         size,
@@ -79,7 +82,10 @@ export const createProduct = async (req: Request, res: Response): Promise<void> 
                 datasheetsId,
                 name,
                 price,
+                promoPrice,  // Novo campo adicionado
                 description,
+                problemDescription, // Novo campo adicionado
+                quality,  // Novo campo adicionado
                 image,
                 auditTrailId,
                 size,
@@ -111,7 +117,10 @@ export const updateProduct = async (req: Request, res: Response): Promise<void> 
         datasheetsId,
         name,
         price,
+        promoPrice,
         description,
+        problemDescription,
+        quality,
         image,
         auditTrailId,
         size,
@@ -138,7 +147,10 @@ export const updateProduct = async (req: Request, res: Response): Promise<void> 
                 datasheetsId,
                 name,
                 price,
+                promoPrice,  // Novo campo adicionado
                 description,
+                problemDescription,  // Novo campo adicionado
+                quality,  // Novo campo adicionado
                 image,
                 auditTrailId,
                 size,

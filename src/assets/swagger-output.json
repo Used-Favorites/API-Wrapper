@@ -7,7 +7,7 @@
   },
   "servers": [
     {
-      "url": "http://localhost:3000"
+      "url": "http://localhost:4041"
     }
   ],
   "tags": [
@@ -608,7 +608,7 @@
         }
       }
     },
-    "/products": {
+    "/Product/products": {
       "get": {
         "tags": [
           "Products"
@@ -1143,7 +1143,7 @@
         }
       }
     },
-    "/products/{id}": {
+    "/Product/products/{id}": {
       "get": {
         "tags": [
           "Products"

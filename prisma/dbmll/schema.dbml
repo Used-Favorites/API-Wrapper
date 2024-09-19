@@ -29,15 +29,18 @@ Table supplier {
 Table Products {
   id Int [pk, increment]
   categoryId Int
-  sellerId Int [not null]
-  buyerId Int [not null]
+  sellerId Int
+  buyerId Int
   datasheetsId Int [unique]
   name String [not null]
   price Float [not null]
+  promoPrice Float
   description String [not null]
+  problemDescription String [not null]
+  quality String [not null]
   image String [not null]
-  auditTrailId Int [unique, not null]
-  auditTrail AuditTrail [not null]
+  auditTrailId Int [unique]
+  auditTrail AuditTrail
   datasheet Datasheets
   category Category
   seller User

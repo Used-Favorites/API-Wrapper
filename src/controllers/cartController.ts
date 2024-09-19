@@ -49,27 +49,78 @@ export const createCart = async (req: Request, res: Response): Promise<void> => 
 export const updateCart = async (req: Request, res: Response): Promise<void> => {
     const { id } = req.params;
     const { productIds } = req.body;
+
     try {
+        // Busca o carrinho existente
+        const existingCart = await prisma.cart.findUnique({
+            where: { id: parseInt(id) },
+            include: { product: true },
+        });
+
+        if (!existingCart) {
+            res.status(404).json({ error: 'Cart not found' });
+            return;
+        }
+
+        // Adiciona os novos produtos ao array existente
+        const updatedProductIds = [
+            ...existingCart.product.map((product) => product.id), 
+            ...productIds
+        ];
+
         const updatedCart = await prisma.cart.update({
             where: { id: parseInt(id) },
             data: {
-                product: { set: productIds.map((id: number) => ({ id })) },
+                product: { set: updatedProductIds.map((id: number) => ({ id })) },
             },
         });
+
         res.json(updatedCart);
     } catch (error) {
         res.status(500).json({ error: 'Failed to update cart' });
     }
 };
 
-export const deleteCart = async (req: Request, res: Response): Promise<void> => {
-    const { id } = req.params;
+export const deleteCartProduct = async (req: Request, res: Response): Promise<void> => {
+    const { id } = req.params; // ID do carrinho
+    const { productIds } = req.body; // IDs dos produtos a serem removidos
+
     try {
-        await prisma.cart.delete({
+        // Busca o carrinho existente junto com seus produtos
+        const existingCart = await prisma.cart.findUnique({
             where: { id: parseInt(id) },
+            include: { product: true },
         });
-        res.status(204).end();
+
+        if (!existingCart) {
+            res.status(404).json({ error: 'Cart not found' });
+            return;
+        }
+
+        // Filtra os produtos que não serão removidos
+        const remainingProducts = existingCart.product.filter(
+            (product) => !productIds.includes(product.id)
+        );
+
+        if (remainingProducts.length === 0) {
+            // Se não há produtos restantes, deleta o carrinho
+            await prisma.cart.delete({
+                where: { id: parseInt(id) },
+            });
+            res.status(204).json({ message: 'Cart deleted because it became empty' });
+        } else {
+            // Caso contrário, atualiza o carrinho removendo apenas os produtos desejados
+            const updatedCart = await prisma.cart.update({
+                where: { id: parseInt(id) },
+                data: {
+                    product: {
+                        set: remainingProducts.map((product) => ({ id: product.id })),
+                    },
+                },
+            });
+            res.json(updatedCart);
+        }
     } catch (error) {
-        res.status(500).json({ error: 'Failed to delete cart' });
+        res.status(500).json({ error: 'Failed to delete products from cart' });
     }
 };

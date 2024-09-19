@@ -50,24 +50,27 @@ model supplier {
 model Products {
   id         Int  @id @default(autoincrement())
   categoryId Int?
-  sellerId   Int
-  buyerId    Int
+  sellerId   Int?
+  buyerId    Int?
 
   datasheetsId Int? @unique
 
   name        String
   price       Float
+  promoPrice  Float?
   description String
+  problemDescription String
+  quality String
   image       String
 
-  auditTrailId Int         @unique
-  auditTrail   AuditTrail  @relation(fields: [auditTrailId], references: [id])
+  auditTrailId Int?         @unique
+  auditTrail   AuditTrail?  @relation(fields: [auditTrailId], references: [id])
   datasheet    Datasheets? @relation(fields: [datasheetsId], references: [id])
   category     Category?   @relation(fields: [categoryId], references: [id])
   seller       User?       @relation("ProductSeller", fields: [sellerId], references: [id])
   buyer        User?       @relation("ProductBuyer", fields: [buyerId], references: [id])
   cart         Cart?       @relation(fields: [cartId], references: [id])
-
+  
   size       Float
   salePrice  Decimal
   repairCost Decimal

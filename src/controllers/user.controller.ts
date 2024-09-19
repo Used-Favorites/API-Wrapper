@@ -3,15 +3,18 @@ import { PrismaClient } from "@prisma/client";
 import jwt from "jsonwebtoken";
 
 const prisma = new PrismaClient();
+
 const userController = {
   createUser: async (req: Request, res: Response) => {
-    const { name, email, password } = req.body as {
+    const { name, email, password, phone } = req.body as {
       name: string;
       email: string;
       password: string;
+      phone: string;
     };
 
-    if (!name || !email || !password) {
+    // Validação de campos
+    if (!name || !email || !password || !phone) {
       console.log(
         "body:",
         req.body,
@@ -20,7 +23,7 @@ const userController = {
         "query:",
         req.query
       );
-      return res.status(400).json({ error: "Missing name, email or password" });
+      return res.status(400).json({ error: "Missing name, email, password or phone" });
     }
     if (password.length < 6) {
       return res
@@ -30,11 +33,14 @@ const userController = {
     if (await prisma.user.findUnique({ where: { email } })) {
       return res.status(400).json({ error: "Email already in use" });
     }
+
+    // Criação do usuário
     const user = await prisma.user.create({
       data: {
         name,
         email,
         password,
+        phone,
         date_birth: new Date(),
       },
     });
@@ -70,10 +76,11 @@ const userController = {
 
   update: async (req: Request, res: Response) => {
     const { id } = req.params as { id: string };
-    const { name, email, password } = req.body as {
+    const { name, email, password, phone } = req.body as {
       name: string;
       email: string;
       password: string;
+      phone: string;
     };
 
     const user = await prisma.user.update({
@@ -84,6 +91,7 @@ const userController = {
         name,
         email,
         password,
+        phone,
       },
     });
 
@@ -129,6 +137,7 @@ const userController = {
 
     return res.json({ user: userWithoutPassword, token });
   },
+
   logout: async (req: Request, res: Response) => {
     return res.json({ message: "Logout successful" });
   },

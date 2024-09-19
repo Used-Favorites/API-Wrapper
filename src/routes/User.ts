@@ -1,5 +1,4 @@
 import express from "express";
-
 import userController from "../controllers/user.controller";
 
 const userRouter = express.Router();
@@ -7,20 +6,26 @@ const userRouter = express.Router();
 userRouter.post("/create", (req, res) => {
   /* #swagger.tags = ['User']
       #swagger.path = '/user/create'
-      #swagger.description = 'Endpoint
-      para criar um novo usuário.'
+      #swagger.description = 'Endpoint para criar um novo usuário.'
       #swagger.parameters['newUser'] = {
             in: 'body',
-            description: 'User information.',
+            description: 'Informações do usuário.',
             required: true,
             schema: {
                 $name: 'John Doe',
-                $email: 'jonhdoe@email.com',
+                $email: 'john.doe@email.com',
                 $password: '123456',
+                $phone: '+5511999999999',
                   }
                 }
       #swagger.responses[201] = {
-        description: 'Usuário criado com sucesso.'
+        description: 'Usuário criado com sucesso.',
+        schema: {
+          $id: 1,
+          $name: 'John Doe',
+          $email: 'john.doe@email.com',
+          $phone: '+5511999999999'
+        }
       }
       #swagger.responses[400] = {
         description: 'Erro ao criar usuário.'
@@ -35,8 +40,7 @@ userRouter.post("/create", (req, res) => {
 userRouter.get("/list", (req, res) => {
   /* #swagger.tags = ['User']
       #swagger.path = '/user/list'
-      #swagger.description = 'Endpoint
-      para listar todos os usuários.'
+      #swagger.description = 'Endpoint para listar todos os usuários.'
       #swagger.responses[200] = {
         description: 'Lista de usuários retornada com sucesso.',
         schema: {
@@ -44,7 +48,8 @@ userRouter.get("/list", (req, res) => {
           items: {
             $id: 1,
             $name: 'John Doe',
-            $email: 'john.doe@example.com'
+            $email: 'john.doe@example.com',
+            $phone: '+5511999999999'
           }
         }
       }
@@ -55,17 +60,35 @@ userRouter.get("/list", (req, res) => {
 userRouter.get("/list/:id", (req, res) => {
   /* #swagger.tags = ['User']
       #swagger.path = '/user/{id}'
-      #swagger.description = 'Endpoint
-      para listar um usuário pelo id.' */
+      #swagger.description = 'Endpoint para listar um usuário pelo ID.'
+      #swagger.parameters['id'] = {
+        in: 'path',
+        description: 'ID do usuário',
+        required: true,
+        schema: {
+          type: 'integer'
+        }
+      }
+      #swagger.responses[200] = {
+        description: 'Usuário retornado com sucesso.',
+        schema: {
+          $id: 1,
+          $name: 'John Doe',
+          $email: 'john.doe@example.com',
+          $phone: '+5511999999999'
+        }
+      }
+      #swagger.responses[404] = {
+        description: 'Usuário não encontrado.'
+      } */
   userController.listById(req, res);
 });
-
 
 userRouter.put("/update/:id", (req, res) => {
   /* 
   #swagger.tags = ['User']
   #swagger.path = '/user/{id}'
-  #swagger.description = 'Endpoint para atualizar um usuário pelo id.'
+  #swagger.description = 'Endpoint para atualizar um usuário pelo ID.'
   
   #swagger.parameters['id'] = {
       in: 'path',
@@ -75,22 +98,50 @@ userRouter.put("/update/:id", (req, res) => {
           type: 'integer'
       }
   }
-*/  
-  
-
+  #swagger.parameters['updateUser'] = {
+      in: 'body',
+      description: 'Informações atualizadas do usuário.',
+      required: true,
+      schema: {
+          $name: 'John Doe',
+          $email: 'john.doe@email.com',
+          $password: '123456',
+          $phone: '+5511999999999'
+      }
+  }
+  #swagger.responses[200] = {
+      description: 'Usuário atualizado com sucesso.',
+      schema: {
+        $id: 1,
+        $name: 'John Doe',
+        $email: 'john.doe@email.com',
+        $phone: '+5511999999999'
+      }
+  }
+  #swagger.responses[404] = {
+      description: 'Usuário não encontrado.'
+  }
+  */
   userController.update(req, res);
 });
 
 userRouter.delete("/delete/:id", (req, res) => {
   /* #swagger.tags = ['User']
       #swagger.path = '/user/{id}'
-      #swagger.description = 'Endpoint
-      para deletar um usuário pelo id.' 
+      #swagger.description = 'Endpoint para deletar um usuário pelo ID.'
       #swagger.parameters['id'] = {
         in: 'path',
         description: 'ID do usuário',
         required: true,
-        type: 'integer'
+        schema: {
+          type: 'integer'
+        }
+      }
+      #swagger.responses[200] = {
+        description: 'Usuário deletado com sucesso.'
+      }
+      #swagger.responses[404] = {
+        description: 'Usuário não encontrado.'
       } */
   userController.delete(req, res);
 });
@@ -98,25 +149,24 @@ userRouter.delete("/delete/:id", (req, res) => {
 userRouter.post("/login", (req, res) => {
   /* #swagger.tags = ['User']
       #swagger.path = '/user/login'
-      #swagger.description = 'Endpoint
-      para realizar login.'
+      #swagger.description = 'Endpoint para realizar login.'
       #swagger.parameters['login'] = {
         in: 'body',
-        description: 'User information.',
+        description: 'Informações de login do usuário.',
         required: true,
         schema: {
-            $email: 'jon@gamil.com',
+            $email: 'john.doe@email.com',
             $password: '123456',
-          }
+        }
       }
       #swagger.responses[200] = {
         description: 'Login realizado com sucesso.'
       }
-      #swagger.responses[400] = {
-        description: 'Erro ao realizar login.'
+      #swagger.responses[401] = {
+        description: 'Senha incorreta.'
       }
-      #swagger.responses[500] = {
-        description: 'Erro no servidor.'
+      #swagger.responses[404] = {
+        description: 'Usuário não encontrado.'
       }
       */
   userController.login(req, res);
@@ -125,8 +175,7 @@ userRouter.post("/login", (req, res) => {
 userRouter.get("/logout", (req, res) => {
   /* #swagger.tags = ['User']
       #swagger.path = '/user/logout'
-      #swagger.description = 'Endpoint
-      para realizar logout.'
+      #swagger.description = 'Endpoint para realizar logout.'
       #swagger.responses[200] = {
         description: 'Logout realizado com sucesso.'
       }
