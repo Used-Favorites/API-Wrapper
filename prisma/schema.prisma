@@ -61,7 +61,7 @@ model Products {
   description String
   problemDescription String
   quality String
-  image       String
+  image       String  @db.LongText 
 
   auditTrailId Int?         @unique
   auditTrail   AuditTrail?  @relation(fields: [auditTrailId], references: [id])

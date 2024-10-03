@@ -77,17 +77,18 @@ export const createProduct = async (req: Request, res: Response): Promise<void> 
         const newProduct = await prisma.products.create({
             data: {
                 categoryId,
-                sellerId,
-                buyerId,
-                datasheetsId,
+                category: { connect: { id: categoryId } }, // Conexão com a categoria
+                seller: { connect: { id: sellerId } }, // Conexão com o vendedor
+                buyer: { connect: { id: buyerId } }, // Conexão com o comprador
+                datasheet: { connect: { id: datasheetsId } }, // Conexão com a ficha técnica
                 name,
                 price,
-                promoPrice,  // Novo campo adicionado
+                promoPrice,
                 description,
-                problemDescription, // Novo campo adicionado
-                quality,  // Novo campo adicionado
+                problemDescription,
+                quality,
                 image,
-                auditTrailId,
+                auditTrail: { connect: { id: auditTrailId } }, // Conexão com o audit trail
                 size,
                 salePrice,
                 repairCost,
@@ -98,13 +99,13 @@ export const createProduct = async (req: Request, res: Response): Promise<void> 
                 brand,
                 model,
                 condition,
-                supplierId,
-                cartId,
+                supplierId, // O ID do fornecedor pode ser passado diretamente, se o modelo permitir
+                cart: cartId ? { connect: { id: cartId } } : undefined, // Conexão com o carrinho se o cartId estiver presente
             },
         });
         res.status(201).json(newProduct);
     } catch (error) {
-        res.status(500).json({ error: 'Failed to create product' });
+        res.status(500).json({ error: 'Failed to create product: ' + error });
     }
 };
 
@@ -141,18 +142,18 @@ export const updateProduct = async (req: Request, res: Response): Promise<void> 
         const updatedProduct = await prisma.products.update({
             where: { id: parseInt(id) },
             data: {
-                categoryId,
-                sellerId,
-                buyerId,
-                datasheetsId,
+                categoryId, // Usa categoryId diretamente
+                sellerId,   // Usa sellerId diretamente
+                buyerId,    // Usa buyerId diretamente
+                datasheetsId, // Usa datasheetsId diretamente
                 name,
                 price,
-                promoPrice,  // Novo campo adicionado
+                promoPrice,
                 description,
-                problemDescription,  // Novo campo adicionado
-                quality,  // Novo campo adicionado
+                problemDescription,
+                quality,
                 image,
-                auditTrailId,
+                auditTrailId, // Usa auditTrailId diretamente
                 size,
                 salePrice,
                 repairCost,
@@ -164,12 +165,12 @@ export const updateProduct = async (req: Request, res: Response): Promise<void> 
                 model,
                 condition,
                 supplierId,
-                cartId,
+                cartId, // Usa cartId diretamente
             },
         });
         res.json(updatedProduct);
     } catch (error) {
-        res.status(500).json({ error: 'Failed to update product' });
+        res.status(500).json({ error: 'Failed to update product: ' + error });
     }
 };
 
