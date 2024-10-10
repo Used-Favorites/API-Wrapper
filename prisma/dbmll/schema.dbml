@@ -11,8 +11,6 @@ Table User {
   phone String
   andreess Andreess
   date_birth DateTime [not null]
-  AuditTrailId Int [unique]
-  AuditTrail AuditTrail
   cart Cart [not null]
   productsBought Products [not null]
   productsSold Products [not null]
@@ -28,10 +26,6 @@ Table supplier {
 
 Table Products {
   id Int [pk, increment]
-  categoryId Int
-  sellerId Int
-  buyerId Int
-  datasheetsId Int [unique]
   name String [not null]
   price Float [not null]
   promoPrice Float
@@ -39,13 +33,10 @@ Table Products {
   problemDescription String [not null]
   quality String [not null]
   image String [not null]
-  auditTrailId Int [unique]
-  auditTrail AuditTrail
-  datasheet Datasheets
   category Category
   seller User
   buyer User
-  cart Cart
+  cart Cart [not null]
   size Float [not null]
   salePrice Decimal [not null]
   repairCost Decimal [not null]
@@ -57,7 +48,9 @@ Table Products {
   model String [not null]
   condition String [not null]
   supplierId Int [not null]
-  cartId Int
+  categoryId Int
+  sellerId Int
+  buyerId Int
 }
 
 Table Andreess {
@@ -72,12 +65,6 @@ Table Andreess {
   supplierId Int
 }
 
-Table Datasheets {
-  id Int [pk, increment]
-  products Products [not null]
-  description String
-}
-
 Table Category {
   id Int [pk, increment]
   name String [not null]
@@ -89,14 +76,6 @@ Table Cart {
   userId Int [unique, not null]
   product Products [not null]
   user User [not null]
-}
-
-Table AuditTrail {
-  id Int [pk, increment]
-  Products Products
-  User User
-  created_at DateTime [default: `now()`, not null]
-  updated_at DateTime [default: `now()`, not null]
 }
 
 Table Yolo {
@@ -119,21 +98,18 @@ Table YoloImages {
   textToImage String [not null]
 }
 
+Table CartToProducts {
+  cartId Int [ref: > Cart.id]
+  productId Int [ref: > Products.id]
+}
+
 Ref: User.andreessId - Andreess.id
-
-Ref: User.AuditTrailId - AuditTrail.id
-
-Ref: Products.auditTrailId - AuditTrail.id
-
-Ref: Products.datasheetsId > Datasheets.id
 
 Ref: Products.categoryId > Category.id
 
 Ref: Products.sellerId > User.id
 
 Ref: Products.buyerId > User.id
-
-Ref: Products.cartId > Cart.id
 
 Ref: Andreess.supplierId > supplier.id
 

@@ -42,7 +42,7 @@ export const createCart = async (req: Request, res: Response): Promise<void> => 
         });
         res.status(201).json(newCart);
     } catch (error) {
-        res.status(500).json({ error: 'Failed to create cart' });
+        res.status(500).json({ error: 'Failed to create cart'+error });
     }
 };
 

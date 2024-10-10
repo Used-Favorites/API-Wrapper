@@ -10,8 +10,6 @@ export const getAllProducts = async (req: Request, res: Response): Promise<void>
                 category: true,
                 seller: true,
                 buyer: true,
-                auditTrail: true,
-                datasheet: true,
                 cart: true,
             },
         });
@@ -29,9 +27,7 @@ export const getProductById = async (req: Request, res: Response): Promise<void>
             include: {
                 category: true,
                 seller: true,
-                buyer: true,
-                auditTrail: true,
-                datasheet: true,
+                buyer: true,               
                 cart: true,
             },
         });
@@ -50,7 +46,6 @@ export const createProduct = async (req: Request, res: Response): Promise<void> 
         categoryId,
         sellerId,
         buyerId,
-        datasheetsId,
         name,
         price,
         promoPrice,
@@ -58,7 +53,6 @@ export const createProduct = async (req: Request, res: Response): Promise<void> 
         problemDescription,
         quality,
         image,
-        auditTrailId,
         size,
         salePrice,
         repairCost,
@@ -70,17 +64,12 @@ export const createProduct = async (req: Request, res: Response): Promise<void> 
         model,
         condition,
         supplierId,
-        cartId,
+        //cartIds,
     } = req.body;
 
     try {
         const newProduct = await prisma.products.create({
-            data: {
-                categoryId,
-                category: { connect: { id: categoryId } }, // Conexão com a categoria
-                seller: { connect: { id: sellerId } }, // Conexão com o vendedor
-                buyer: { connect: { id: buyerId } }, // Conexão com o comprador
-                datasheet: { connect: { id: datasheetsId } }, // Conexão com a ficha técnica
+            data: { 
                 name,
                 price,
                 promoPrice,
@@ -88,19 +77,22 @@ export const createProduct = async (req: Request, res: Response): Promise<void> 
                 problemDescription,
                 quality,
                 image,
-                auditTrail: { connect: { id: auditTrailId } }, // Conexão com o audit trail
+                category: categoryId ? { connect: { id: categoryId } } : undefined,
+                seller: sellerId ? { connect: { id: sellerId } } : undefined,
+                buyer: buyerId ? { connect: { id: buyerId } } : undefined,
                 size,
                 salePrice,
                 repairCost,
                 finalPrice,
                 repaired,
-                lastModified,
+                lastModified: lastModified ? lastModified : new Date(),
                 interestedParties,
                 brand,
                 model,
                 condition,
-                supplierId, // O ID do fornecedor pode ser passado diretamente, se o modelo permitir
-                cart: cartId ? { connect: { id: cartId } } : undefined, // Conexão com o carrinho se o cartId estiver presente
+                supplierId, // Este campo pode ser passado diretamente se não for uma relação
+                //cart: cartId ? { connect: { id: cartId } } : undefined,
+                //cart: { connect: cartIds.map((id: number) => ({ id })) },
             },
         });
         res.status(201).json(newProduct);
@@ -114,8 +106,7 @@ export const updateProduct = async (req: Request, res: Response): Promise<void> 
     const {
         categoryId,
         sellerId,
-        buyerId,
-        datasheetsId,
+        buyerId,        
         name,
         price,
         promoPrice,
@@ -123,7 +114,6 @@ export const updateProduct = async (req: Request, res: Response): Promise<void> 
         problemDescription,
         quality,
         image,
-        auditTrailId,
         size,
         salePrice,
         repairCost,
@@ -135,7 +125,7 @@ export const updateProduct = async (req: Request, res: Response): Promise<void> 
         model,
         condition,
         supplierId,
-        cartId,
+        cartIds,
     } = req.body;
 
     try {
@@ -144,16 +134,14 @@ export const updateProduct = async (req: Request, res: Response): Promise<void> 
             data: {
                 categoryId, // Usa categoryId diretamente
                 sellerId,   // Usa sellerId diretamente
-                buyerId,    // Usa buyerId diretamente
-                datasheetsId, // Usa datasheetsId diretamente
+                buyerId,    // Usa buyerId diretamente               
                 name,
                 price,
                 promoPrice,
                 description,
                 problemDescription,
                 quality,
-                image,
-                auditTrailId, // Usa auditTrailId diretamente
+                image,              
                 size,
                 salePrice,
                 repairCost,
@@ -164,8 +152,7 @@ export const updateProduct = async (req: Request, res: Response): Promise<void> 
                 brand,
                 model,
                 condition,
-                supplierId,
-                cartId, // Usa cartId diretamente
+                supplierId                
             },
         });
         res.json(updatedProduct);

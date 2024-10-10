@@ -31,8 +31,6 @@ model User {
   andreess   Andreess? @relation(fields: [andreessId], references: [id])
   date_birth DateTime
 
-  AuditTrailId Int?        @unique
-  AuditTrail   AuditTrail? @relation(fields: [AuditTrailId], references: [id])
 
   cart           Cart[]
   productsBought Products[] @relation("ProductBuyer")
@@ -49,11 +47,6 @@ model supplier {
 
 model Products {
   id         Int  @id @default(autoincrement())
-  categoryId Int?
-  sellerId   Int?
-  buyerId    Int?
-
-  datasheetsId Int? @unique
 
   name        String
   price       Float
@@ -63,13 +56,10 @@ model Products {
   quality String
   image       String  @db.LongText 
 
-  auditTrailId Int?         @unique
-  auditTrail   AuditTrail?  @relation(fields: [auditTrailId], references: [id])
-  datasheet    Datasheets? @relation(fields: [datasheetsId], references: [id])
   category     Category?   @relation(fields: [categoryId], references: [id])
   seller       User?       @relation("ProductSeller", fields: [sellerId], references: [id])
   buyer        User?       @relation("ProductBuyer", fields: [buyerId], references: [id])
-  cart         Cart?       @relation(fields: [cartId], references: [id])
+  cart         Cart[]
   
   size       Float
   salePrice  Decimal
@@ -84,7 +74,10 @@ model Products {
   model             String
   condition         String
   supplierId        Int
-  cartId            Int?
+  categoryId Int?
+  sellerId   Int?
+  buyerId    Int?
+        
 }
 
 model Andreess {
@@ -99,11 +92,7 @@ model Andreess {
   supplierId Int?
 }
 
-model Datasheets {
-  id          Int        @id @default(autoincrement())
-  products    Products[]
-  description String?
-}
+
 
 model Category {
   id       Int        @id @default(autoincrement())
@@ -118,15 +107,7 @@ model Cart {
   user    User       @relation(fields: [userId], references: [id])
 }
 
-model AuditTrail {
-  id Int @id @default(autoincrement())
 
-  Products Products?
-  User     User?
-
-  created_at DateTime @default(now())
-  updated_at DateTime @default(now())
-}
 
 model Yolo {
   id      Int    @id @default(autoincrement())
