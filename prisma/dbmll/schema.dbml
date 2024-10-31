@@ -6,7 +6,7 @@ Table User {
   id Int [pk, increment]
   email String [unique, not null]
   password String [not null]
-  name String [not null]
+  name String [unique, not null]
   andreessId Int [unique]
   phone String
   andreess Andreess
@@ -57,13 +57,13 @@ Table Products {
   model String [not null]
   condition String [not null]
   supplierId Int [not null]
-  CEP Int
+  CEP String
   categoryId Int
   sellerId Int
   buyerId Int
-  amount Int
-  reservedAmount Int
-  amountSould Int
+  amount Int [default: 0]
+  reservedAmount Int [default: 0]
+  amountSould Int [default: 0]
 }
 
 Table Andreess {

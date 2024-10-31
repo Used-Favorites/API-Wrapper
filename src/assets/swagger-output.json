@@ -2097,6 +2097,99 @@
         }
       }
     },
+    "/user/cep/{login}": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "description": "Endpoint para falar o cep de um login.",
+        "parameters": [
+          {
+            "name": "login",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "login do usuário"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Usuário retornado com sucesso.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "number",
+                      "example": 1
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "John Doe"
+                    },
+                    "email": {
+                      "type": "string",
+                      "example": "john.doe@example.com"
+                    },
+                    "phone": {
+                      "type": "string",
+                      "example": "+5511999999999"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "name",
+                    "email",
+                    "phone"
+                  ],
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "number",
+                      "example": 1
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "John Doe"
+                    },
+                    "email": {
+                      "type": "string",
+                      "example": "john.doe@example.com"
+                    },
+                    "phone": {
+                      "type": "string",
+                      "example": "+5511999999999"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "name",
+                    "email",
+                    "phone"
+                  ],
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Usuário não encontrado."
+          }
+        }
+      }
+    },
     "/user/login": {
       "post": {
         "tags": [

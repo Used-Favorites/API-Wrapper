@@ -25,8 +25,8 @@ model User {
   email    String @unique
   password String
 
-  name       String
-  andreessId Int?      @unique
+  name       String @unique
+  andreessId Int?     @unique 
   phone      String?
   andreess   Andreess? @relation(fields: [andreessId], references: [id])
   date_birth DateTime
@@ -85,13 +85,13 @@ model Products {
   model             String
   condition         String
   supplierId        Int
-  CEP Int?
+  CEP String?
   categoryId Int?
   sellerId   Int?
   buyerId    Int?
-  amount Int?      
-  reservedAmount Int?
-  amountSould Int?
+  amount Int?      @default(0)
+  reservedAmount Int? @default(0)
+  amountSould Int? @default(0)
 }
 
 model Andreess {

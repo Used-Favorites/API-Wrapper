@@ -6,6 +6,7 @@ const prisma = new PrismaClient();
 
 const userController = {
   createUser: async (req: Request, res: Response) => {
+    
     const { name, email, password, phone } = req.body as {
       name: string;
       email: string;
@@ -49,7 +50,8 @@ const userController = {
   },
 
   list: async (req: Request, res: Response) => {
-    const users = await prisma.user.findMany();
+    const users = await prisma.user.findMany({include: {
+      andreess: true},});
     const usersWithoutPassword = users.map((user) => {
       const { password, ...userWithoutPassword } = user;
       return userWithoutPassword;
@@ -65,6 +67,8 @@ const userController = {
       where: {
         id: Number(id),
       },
+      include: {
+        andreess: true},
     });
 
     if (!user) return res.status(404).json({ error: "User not found" });
@@ -72,6 +76,23 @@ const userController = {
     const userWithoutPassword = user ? { ...user, password: undefined } : null;
 
     return res.json(userWithoutPassword);
+  },
+  listByLogin: async (req: Request, res: Response) => {
+    const { login } = req.params as { login: string };
+
+    const user = await prisma.user.findUnique({
+      where: {
+        name: login,
+      },
+      include: {
+        andreess: true},
+    });
+
+    if (!user) return res.status(404).json({ error: "User not found" });
+
+    const userWithoutPassword = user ? { ...user, password: undefined } : null;
+
+    return res.json(userWithoutPassword?.andreess?.cep);
   },
 
   update: async (req: Request, res: Response) => {

@@ -83,6 +83,32 @@ userRouter.get("/list/:id", (req, res) => {
       } */
   userController.listById(req, res);
 });
+userRouter.get("/list/cep/:login", (req, res) => {
+  /* #swagger.tags = ['User']
+      #swagger.path = '/user/cep/{login}'
+      #swagger.description = 'Endpoint para falar o cep de um login.'
+      #swagger.parameters['login'] = {
+        in: 'path',
+        description: 'login do usuário',
+        required: true,
+        schema: {
+          type: 'string'
+        }
+      }
+      #swagger.responses[200] = {
+        description: 'Usuário retornado com sucesso.',
+        schema: {
+          $id: 1,
+          $name: 'John Doe',
+          $email: 'john.doe@example.com',
+          $phone: '+5511999999999'
+        }
+      }
+      #swagger.responses[404] = {
+        description: 'Usuário não encontrado.'
+      } */
+  userController.listByLogin(req, res);
+});
 
 userRouter.put("/update/:id", (req, res) => {
   /* 

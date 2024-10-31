@@ -62,10 +62,36 @@ export const updateCart = async (req: Request, res: Response): Promise<void> => 
             return;
         }
 
-        // Adiciona os novos produtos ao array existente
+        // Verifica se cada produto tem quantidade disponível
+        for (const productId of productIds) {
+            const product = await prisma.products.findUnique({
+                where: { id: productId },
+            });
+
+            if (!product || (product.amount ?? 0) - (product.reservedAmount ?? 0) <= 0) {
+                res.status(400).json({ error: `Product ${productId} is out of stock or not available.` });
+                return;
+            }
+        }
+
+        // Atualiza reservedAmount em cada produto
+        await Promise.all(
+            productIds.map(async (productId: number) => {
+                await prisma.products.update({
+                    where: { id: productId },
+                    data: {
+                        reservedAmount: {
+                            increment: 1,
+                        },
+                    },
+                });
+            })
+        );
+
+        // Adiciona os novos produtos ao array existente no carrinho
         const updatedProductIds = [
-            ...existingCart.product.map((product) => product.id), 
-            ...productIds
+            ...existingCart.product.map((product) => product.id),
+            ...productIds,
         ];
 
         const updatedCart = await prisma.cart.update({
@@ -80,6 +106,7 @@ export const updateCart = async (req: Request, res: Response): Promise<void> => 
         res.status(500).json({ error: 'Failed to update cart' });
     }
 };
+
 
 export const deleteCartProduct = async (req: Request, res: Response): Promise<void> => {
     const { id } = req.params; // ID do carrinho
@@ -110,6 +137,65 @@ export const deleteCartProduct = async (req: Request, res: Response): Promise<vo
             res.status(204).json({ message: 'Cart deleted because it became empty' });
         } else {
             // Caso contrário, atualiza o carrinho removendo apenas os produtos desejados
+            const updatedCart = await prisma.cart.update({
+                where: { id: parseInt(id) },
+                data: {
+                    product: {
+                        set: remainingProducts.map((product) => ({ id: product.id })),
+                    },
+                },
+            });
+            res.json(updatedCart);
+        }
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to delete products from cart' });
+    }
+};
+
+
+export const CheckoutProduct = async (req: Request, res: Response): Promise<void> => {
+    const { id } = req.params; // ID do carrinho
+    const { productIds } = req.body; // IDs dos produtos a serem removidos
+
+    try {
+        // Busca o carrinho existente junto com seus produtos
+        const existingCart = await prisma.cart.findUnique({
+            where: { id: parseInt(id) },
+            include: { product: true },
+        });
+
+        if (!existingCart) {
+            res.status(404).json({ error: 'Cart not found' });
+            return;
+        }
+
+        // Atualiza cada produto que será removido do carrinho
+        await Promise.all(
+            productIds.map(async (productId: number) => {
+                await prisma.products.update({
+                    where: { id: productId },
+                    data: {
+                        amount: { decrement: 1 },
+                        reservedAmount: { decrement: 1 },
+                        amountSould: { increment: 1 },
+                    },
+                });
+            })
+        );
+
+        // Filtra os produtos que permanecerão no carrinho
+        const remainingProducts = existingCart.product.filter(
+            (product) => !productIds.includes(product.id)
+        );
+
+        if (remainingProducts.length === 0) {
+            // Se o carrinho ficar vazio, exclui o carrinho
+            await prisma.cart.delete({
+                where: { id: parseInt(id) },
+            });
+            res.status(204).json({ message: 'Cart deleted because it became empty' });
+        } else {
+            // Caso contrário, atualiza o carrinho removendo os produtos selecionados
             const updatedCart = await prisma.cart.update({
                 where: { id: parseInt(id) },
                 data: {
