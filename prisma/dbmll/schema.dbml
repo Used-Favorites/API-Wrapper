@@ -29,6 +29,12 @@ Table Products {
   name String [not null]
   price Float [not null]
   promoPrice Float
+  promostart1 DateTime
+  promoend1 DateTime
+  promoamount1 Int
+  promostart2 DateTime
+  promoend2 DateTime
+  promoamount2 Int
   description String [not null]
   problemDescription String [not null]
   quality String [not null]
@@ -37,7 +43,10 @@ Table Products {
   seller User
   buyer User
   cart Cart [not null]
-  size Float [not null]
+  height Float
+  width Float
+  depth Float
+  weight Float
   salePrice Decimal [not null]
   repairCost Decimal [not null]
   finalPrice Decimal [not null]
@@ -48,9 +57,13 @@ Table Products {
   model String [not null]
   condition String [not null]
   supplierId Int [not null]
+  CEP Int
   categoryId Int
   sellerId Int
   buyerId Int
+  amount Int
+  reservedAmount Int
+  amountSould Int
 }
 
 Table Andreess {

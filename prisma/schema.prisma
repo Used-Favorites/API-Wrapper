@@ -51,6 +51,12 @@ model Products {
   name        String
   price       Float
   promoPrice  Float?
+  promostart1 DateTime?
+  promoend1 DateTime?
+  promoamount1 Int?
+  promostart2 DateTime?
+  promoend2 DateTime?
+  promoamount2 Int?
   description String
   problemDescription String
   quality String
@@ -61,7 +67,12 @@ model Products {
   buyer        User?       @relation("ProductBuyer", fields: [buyerId], references: [id])
   cart         Cart[]
   
-  size       Float
+  height   Float?
+  width  Float?
+  depth Float?
+  weight Float?
+  
+
   salePrice  Decimal
   repairCost Decimal
   finalPrice Decimal
@@ -74,10 +85,13 @@ model Products {
   model             String
   condition         String
   supplierId        Int
+  CEP Int?
   categoryId Int?
   sellerId   Int?
   buyerId    Int?
-        
+  amount Int?      
+  reservedAmount Int?
+  amountSould Int?
 }
 
 model Andreess {
