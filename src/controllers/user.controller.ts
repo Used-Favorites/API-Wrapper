@@ -45,6 +45,12 @@ const userController = {
         date_birth: new Date(),
       },
     });
+    const newCart = await prisma.cart.create({
+      data: {
+          user: { connect: { id: user.id } },
+          
+      },
+  });
 
     return res.json(user);
   },

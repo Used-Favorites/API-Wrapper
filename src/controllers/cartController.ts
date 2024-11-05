@@ -18,7 +18,7 @@ export const getCartById = async (req: Request, res: Response): Promise<void> =>
     const { id } = req.params;
     try {
         const cart = await prisma.cart.findUnique({
-            where: { id: parseInt(id) },
+            where: { userId: parseInt(id) },
             include: { user: true, product: true },
         });
         if (cart) {
@@ -53,7 +53,7 @@ export const updateCart = async (req: Request, res: Response): Promise<void> => 
     try {
         // Busca o carrinho existente
         const existingCart = await prisma.cart.findUnique({
-            where: { id: parseInt(id) },
+            where: { userId: parseInt(id) },
             include: { product: true },
         });
 
@@ -95,7 +95,7 @@ export const updateCart = async (req: Request, res: Response): Promise<void> => 
         ];
 
         const updatedCart = await prisma.cart.update({
-            where: { id: parseInt(id) },
+            where: { userId: parseInt(id) },
             data: {
                 product: { set: updatedProductIds.map((id: number) => ({ id })) },
             },
@@ -115,7 +115,7 @@ export const deleteCartProduct = async (req: Request, res: Response): Promise<vo
     try {
         // Busca o carrinho existente junto com seus produtos
         const existingCart = await prisma.cart.findUnique({
-            where: { id: parseInt(id) },
+            where: { userId: parseInt(id) },
             include: { product: true },
         });
 
@@ -129,7 +129,19 @@ export const deleteCartProduct = async (req: Request, res: Response): Promise<vo
             (product) => !productIds.includes(product.id)
         );
 
-        if (remainingProducts.length === 0) {
+          // Atualiza cada produto que será removido do carrinho
+          await Promise.all(
+            productIds.map(async (productId: number) => {
+                await prisma.products.update({
+                    where: { id: productId },
+                    data: {                        
+                        reservedAmount: { decrement: 1 }
+                    },
+                });
+            })
+        );
+
+        if (remainingProducts.length === -5) {
             // Se não há produtos restantes, deleta o carrinho
             await prisma.cart.delete({
                 where: { id: parseInt(id) },
@@ -138,7 +150,7 @@ export const deleteCartProduct = async (req: Request, res: Response): Promise<vo
         } else {
             // Caso contrário, atualiza o carrinho removendo apenas os produtos desejados
             const updatedCart = await prisma.cart.update({
-                where: { id: parseInt(id) },
+                where: { userId: parseInt(id) },
                 data: {
                     product: {
                         set: remainingProducts.map((product) => ({ id: product.id })),
@@ -160,7 +172,7 @@ export const CheckoutProduct = async (req: Request, res: Response): Promise<void
     try {
         // Busca o carrinho existente junto com seus produtos
         const existingCart = await prisma.cart.findUnique({
-            where: { id: parseInt(id) },
+            where: { userId: parseInt(id) },
             include: { product: true },
         });
 
@@ -188,16 +200,16 @@ export const CheckoutProduct = async (req: Request, res: Response): Promise<void
             (product) => !productIds.includes(product.id)
         );
 
-        if (remainingProducts.length === 0) {
+        if (remainingProducts.length === -5) {
             // Se o carrinho ficar vazio, exclui o carrinho
             await prisma.cart.delete({
-                where: { id: parseInt(id) },
+                where: { userId: parseInt(id) },
             });
             res.status(204).json({ message: 'Cart deleted because it became empty' });
         } else {
             // Caso contrário, atualiza o carrinho removendo os produtos selecionados
             const updatedCart = await prisma.cart.update({
-                where: { id: parseInt(id) },
+                where: { userId: parseInt(id) },
                 data: {
                     product: {
                         set: remainingProducts.map((product) => ({ id: product.id })),
