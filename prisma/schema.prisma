@@ -13,7 +13,7 @@ generator dbml {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = "postgres://postgres.nqbramdzgdkwidpendxq:KO1arAPgJXa5d7a7@aws-0-us-east-1.pooler.supabase.com:6543/postgres?sslmode=require&supa=base-pooler.x"
 }
 
 generator class {
