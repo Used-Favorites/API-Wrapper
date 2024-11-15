@@ -3,7 +3,7 @@
 
 generator client {
   provider = "prisma-client-js"
- 
+  output   = "./generated/client"
 }
 
 generator dbml {
@@ -12,8 +12,8 @@ generator dbml {
 }
 
 datasource db {
-  provider = "mysql"
-  url      = "mysql://root@localhost:3307/prisma"
+  provider = env("DATABASE_PROVIDER")
+  url      = env("DATABASE_URL")
 }
 
 generator class {
