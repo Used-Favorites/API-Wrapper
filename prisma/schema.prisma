@@ -60,7 +60,7 @@ model Products {
   description String
   problemDescription String
   quality String
-  image       String  @db.LongText 
+  image       String   
 
   category     Category?   @relation(fields: [categoryId], references: [id])
   seller       User?       @relation("ProductSeller", fields: [sellerId], references: [id])
