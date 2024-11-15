@@ -12,7 +12,7 @@ generator dbml {
 }
 
 datasource db {
-  provider = env("DATABASE_PROVIDER")
+  provider = "postgresql"
   url      = env("DATABASE_POSTGRES_URL")
 }
 
