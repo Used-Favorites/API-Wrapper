@@ -85,8 +85,8 @@
     "dev": "nodemon src/main.ts",
     "prod": "npx ts-node src/swagger.ts && npx ts-node src/main.ts",
     "prod:dev": "ts-node src/swagger.ts && nodemon src/main.ts",
-    "postinstall": "prisma generate && npx prisma migrate deploy",
-    "vercel-build": "prisma generate && npx prisma db push && npx ts-node src/swagger.ts && npx ts-node src/main.ts"
+    "postinstall": "prisma generate &&  prisma migrate deploy",
+    "vercel-build": "prisma generate && prisma db push && npx ts-node src/swagger.ts && npx ts-node src/main.ts"
   },
   "keywords": [],
   "author": "",
