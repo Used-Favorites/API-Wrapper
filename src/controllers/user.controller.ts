@@ -7,15 +7,22 @@ const prisma = new PrismaClient();
 const userController = {
   createUser: async (req: Request, res: Response) => {
     
-    const { name, email, password, phone } = req.body as {
+    const { name, email, password, phone, andreess } = req.body as {
       name: string;
       email: string;
       password: string;
       phone: string;
+      andreess: {
+        street: string;
+        number: string;
+        city: string;
+        state: string;
+        cep: string;
+      };
     };
 
     // Validação de campos
-    if (!name || !email || !password || !phone) {
+    if (!name || !email || !password || !phone ||!andreess) {
       console.log(
         "body:",
         req.body,
@@ -43,8 +50,17 @@ const userController = {
         password,
         phone,
         date_birth: new Date(),
+        andreess: {
+          create: {
+            street: andreess.street,
+            number: andreess.number,
+            city: andreess.city,
+            state: andreess.state,
+            cep: andreess.cep,
+          },
       },
-    });
+  },
+});
     const newCart = await prisma.cart.create({
       data: {
           user: { connect: { id: user.id } },
@@ -100,7 +116,36 @@ const userController = {
 
     return res.json(userWithoutPassword?.andreess?.cep);
   },
-
+  listByIdLogin: async (req: Request, res: Response) => {
+    const { id } = req.params as { id: string };
+  
+    // Verificar se o id pode ser convertido para número
+    const userId = Number(id);
+    if (isNaN(userId)) {
+      return res.status(400).json({ error: "ID inválido. O ID deve ser um número." });
+    }
+  
+    try {
+      const user = await prisma.user.findUnique({
+        where: {
+          id: userId,
+        },
+        include: {
+          andreess: true,
+        },
+      });
+  
+      if (!user) return res.status(404).json({ error: "User not found" });
+  
+      // Remover a senha antes de retornar os dados
+      const userWithoutPassword = { ...user, password: undefined };
+  
+      return res.json(userWithoutPassword?.andreess?.cep);
+    } catch (error) {
+      console.error("Error fetching user:", error);
+      return res.status(500).json({ error: "Erro ao buscar usuário." });
+    }
+  },
   update: async (req: Request, res: Response) => {
     const { id } = req.params as { id: string };
     const { name, email, password, phone } = req.body as {

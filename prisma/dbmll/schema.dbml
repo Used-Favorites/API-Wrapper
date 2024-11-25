@@ -7,9 +7,9 @@ Table User {
   email String [unique, not null]
   password String [not null]
   name String [unique, not null]
-  andreessId Int [unique]
+  andreessId Int [not null]
   phone String
-  andreess Andreess
+  andreess Andreess [not null]
   date_birth DateTime [not null]
   cart Cart [not null]
   productsBought Products [not null]
@@ -74,7 +74,8 @@ Table Andreess {
   state String [not null]
   cep String [not null]
   supplier supplier
-  User User
+  User User [not null]
+  payments Payments [not null]
   supplierId Int
 }
 
@@ -89,6 +90,18 @@ Table Cart {
   userId Int [unique, not null]
   product Products [not null]
   user User [not null]
+}
+
+Table Payments {
+  id Int [pk, increment]
+  userId Int [not null]
+  productId Int [not null]
+  productName String [not null]
+  price Float [not null]
+  supplierId Int [not null]
+  ProductCEP String [not null]
+  andreessId Int [not null]
+  andreess Andreess [not null]
 }
 
 Table Yolo {
@@ -116,7 +129,7 @@ Table CartToProducts {
   productId Int [ref: > Products.id]
 }
 
-Ref: User.andreessId - Andreess.id
+Ref: User.andreessId > Andreess.id
 
 Ref: Products.categoryId > Category.id
 
@@ -127,3 +140,5 @@ Ref: Products.buyerId > User.id
 Ref: Andreess.supplierId > supplier.id
 
 Ref: Cart.userId > User.id
+
+Ref: Payments.andreessId > Andreess.id
