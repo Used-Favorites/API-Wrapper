@@ -73,6 +73,7 @@ Table Andreess {
   city String [not null]
   state String [not null]
   cep String [not null]
+  additionalInfo String [default: '']
   supplier supplier
   User User [not null]
   payments Payments [not null]

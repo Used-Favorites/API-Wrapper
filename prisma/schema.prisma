@@ -101,6 +101,7 @@ model Andreess {
   city       String
   state      String
   cep        String
+  additionalInfo String? @default("")
   supplier   supplier? @relation(fields: [supplierId], references: [id])
   User       User[]
   payments Payments[]

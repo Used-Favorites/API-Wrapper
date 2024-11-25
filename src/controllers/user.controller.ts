@@ -18,6 +18,7 @@ const userController = {
         city: string;
         state: string;
         cep: string;
+        additionalInfo: string;
       };
     };
 
@@ -57,6 +58,7 @@ const userController = {
             city: andreess.city,
             state: andreess.state,
             cep: andreess.cep,
+            additionalInfo: andreess.additionalInfo,
           },
       },
   },
